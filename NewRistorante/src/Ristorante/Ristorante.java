@@ -6,12 +6,11 @@ import java.util.TreeSet;
 
 import Magazzino.RegistroMagazzino;
 import Prenotazioni.Giorno;
-import Util.ServizioFile;
 
 public class Ristorante {
 
 	private static Ristorante instance;
-	
+
 	private String nome;
 	private int caricoLavoroPersona;
 	private int numPosti;
@@ -36,14 +35,13 @@ public class Ristorante {
 		this.registroMagazzino = new RegistroMagazzino();
 	}
 
-	public static Ristorante getInstance(String nome, String percorsoCompleto) {
-	    if (instance == null) {
-	        instance = new Ristorante(nome);
-	        ServizioFile.creaFile(percorsoCompleto);
-	    }
-	    return instance;
+	public static Ristorante getInstance(String nome) {
+		if (instance == null) {
+			instance = new Ristorante(nome);
+		}
+		return instance;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -83,7 +81,7 @@ public class Ristorante {
 	public void setCalendario(TreeSet<Giornata> calendario) {
 		this.calendario = calendario;
 	}
-	
+
 	public Giornata getGiornata (Giorno giorno) {
 		for (Giornata giornata : calendario) {
 			if (giornata.getGiorno().equals(giorno)) {
@@ -161,7 +159,7 @@ public class Ristorante {
 	public void setMenuTematici(HashSet<MenuTematico> menuTematici) {
 		this.menuTematici = menuTematici;
 	}
-	
+
 	public void aggiungiMenuTematico (MenuTematico menu) {
 		this.menuTematici.add(menu);
 	}

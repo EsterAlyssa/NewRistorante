@@ -19,6 +19,7 @@ public class ServizioFile
 				System.out.println(MSG_SUCCESSO);
 			}
 			file.setWritable(true, false);
+			file.setReadable(true, false);
 		} catch (IOException e) {
 			System.out.println(MSG_ERR_CREAZIONE);
 		}
@@ -115,6 +116,17 @@ public class ServizioFile
 			}
 		} // finally
 	} // metodo salvaSingoloOggetto
-
+	
+	
+	public static void saveObjectToFile(Object object, String filePath) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(object);
+            System.out.println("Oggetto salvato con successo su: " + filePath);
+        } catch (IOException e) {
+            System.out.println("Si è verificato un errore durante il salvataggio dell'oggetto su: " + filePath);
+            e.printStackTrace();
+        }
+    }
 }
 

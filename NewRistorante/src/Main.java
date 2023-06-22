@@ -1,6 +1,7 @@
 import Ristorante.Ristorante;
 import Utenti.Gestore;
 import Utenti.Utente;
+import Util.ConfigurazioneManager;
 import Util.InputDati;
 import Util.ServizioFile;
 
@@ -12,7 +13,6 @@ public class Main {
 	public static void main(String[] args) {
 		if (ServizioFile.ePrimaApertura(RISTORANTE_DIRECTORY_PATH)) {
 			ristorante = creaRistorante();
-			Gestore.inizializzaRistorante(ristorante);
 		} else {
 			ristorante = accediRistorante();
 		}
@@ -24,7 +24,9 @@ public class Main {
 		String messaggioBenvenuto = "Benvenuto! Inserisci il nome del ristorante: ";
 		String nomeRistorante = InputDati.leggiStringaNonVuota(messaggioBenvenuto);
 		String percorsoCompleto = RISTORANTE_DIRECTORY_PATH + nomeRistorante + ".txt";
-		Ristorante ristorante = Ristorante.getInstance(nomeRistorante, percorsoCompleto);
+		Ristorante ristorante = Ristorante.getInstance(nomeRistorante);
+		Gestore.inizializzaRistorante(ristorante);
+		ConfigurazioneManager.salvaIstanzaRistorante(ristorante, percorsoCompleto);
 		return ristorante;
 	}
 
@@ -33,7 +35,8 @@ public class Main {
 		String nomeRistorante = ServizioFile.getNomeFile(RISTORANTE_DIRECTORY_PATH);
 		if (nomeRistorante != null) {
 			String percorsoCompleto = RISTORANTE_DIRECTORY_PATH + nomeRistorante + ".txt";
-			ristoranteTrovato = Ristorante.getInstance(nomeRistorante, percorsoCompleto);
+			ConfigurazioneManager.caricaIstanzaRistoranteDaFile(percorsoCompleto);
+			ristoranteTrovato = Ristorante.getInstance(nomeRistorante);
 			System.out.println("Benvenuto! Ristorante: " + ristoranteTrovato.getNome());
 		} 
 		return ristoranteTrovato;
