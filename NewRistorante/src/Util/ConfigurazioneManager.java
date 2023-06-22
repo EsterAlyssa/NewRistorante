@@ -31,7 +31,7 @@ public class ConfigurazioneManager {
 					String attributeName = parts[0].trim();
 					String attributeValue = parts[1].trim();
 					// Imposta l'attributo corrispondente nell'oggetto
-					setSingletonAttribute(nomeRistorante, pathRistorante, attributeName, attributeValue);
+					setSingletonAttribute(nomeRistorante, attributeName, attributeValue);
 				}
 			}
 			reader.close();
@@ -40,8 +40,8 @@ public class ConfigurazioneManager {
 		}
 	}
 
-	private static void setSingletonAttribute(String nomeRistorante, String pathRistorante, String attributeName, String attributeValue) {
-		Ristorante ristorante = Ristorante.getInstance(nomeRistorante, pathRistorante);
+	private static void setSingletonAttribute(String nomeRistorante, String attributeName, String attributeValue) {
+		Ristorante ristorante = Ristorante.getInstance(nomeRistorante);
 		// Imposta l'attributo nell'oggetto singleton utilizzando i metodi setter corrispondenti
 		switch (attributeName) {
 		case "nome":

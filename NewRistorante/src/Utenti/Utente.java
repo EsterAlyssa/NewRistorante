@@ -54,7 +54,7 @@ public abstract class Utente implements MenuUtente {
 	public static void mostraMenuRuoli(String pathCompletoFile) {
 		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
 		Utente utente = null;
-	    Ristorante ristorante = Ristorante.getInstance(nome, pathCompletoFile);
+	    Ristorante ristorante = Ristorante.getInstance(nome);
 		MyMenu menuRuoli = new MyMenu("Seleziona il tuo ruolo:", MENU_RUOLI);
 		int scelta = menuRuoli.scegli();
 		switch (scelta) {
