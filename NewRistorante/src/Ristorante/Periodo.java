@@ -46,7 +46,7 @@ public class Periodo {
 		return daTornare;
 	}
 	
-	public static Periodo parsePeriodo(String input) {
+	public static Periodo parsePeriodo(String input) { //String stile aaaa-mm-gg;aaaa-mm-gg ...
 	    Periodo periodo = new Periodo();
 
 	    String[] giorni = input.split(";");

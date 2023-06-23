@@ -23,17 +23,21 @@ public abstract class ConfiguratoreManager {
 			String nomeOggetto = ServizioFile.getNomeFileSenzaEstensione(pathOggetto);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				String[] parte = line.split("=");
-				if (parte.length == 2) {
-					String nomeAttributo = parte[0].trim();
-					String valoreAttributo = parte[1].trim();
-					// Imposta l'attributo corrispondente nell'oggetto
-					setAttributiOggetto(nomeOggetto, nomeAttributo, valoreAttributo);
-				}
+				caricaIstanzaOggetto(nomeOggetto, line);
 			}
 			reader.close();
 		} catch (IOException e) {
 			System.out.println("Impossibile caricare l'oggetto");
+		}
+	}
+
+	public void caricaIstanzaOggetto(String nomeOggetto, String line) {
+		String[] parte = line.split("=");
+		if (parte.length == 2) {
+			String nomeAttributo = parte[0].trim();
+			String valoreAttributo = parte[1].trim();
+			// Imposta l'attributo corrispondente nell'oggetto
+			setAttributiOggetto(nomeOggetto, nomeAttributo, valoreAttributo);
 		}
 	}
 

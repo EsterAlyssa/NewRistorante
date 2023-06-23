@@ -55,14 +55,17 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 		case "elenco":
 			HashSet<Piatto> elenco = new HashSet<>();
 			String[] piatti = valoreAttributo.split("\n");
+			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
 			for (String piatto : piatti) {
-				ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
-				Piatto p = new Piatto(piatto);
-				confPiat.caricaIstanzaOggettoDaFile(piatto);
+				Piatto p = new Piatto(piatto); //l'oggetto piatto ha nel attributo nome tutta la stringa
+				int i=1;
+				String nomePiatto = "Piatto"+i;
+				confPiat.caricaIstanzaOggetto(nomePiatto, piatto);; //sovrascritto il nome dell'oggetto
 				elenco.add(p);
+				i++;
 			}
 			menu.setElenco(elenco);
-			break;    
+			break;   
 		default:
 			System.out.println("Errore nel settaggio dei parametri");
 			break;

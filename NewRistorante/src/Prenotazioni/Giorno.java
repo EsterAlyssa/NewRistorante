@@ -69,11 +69,11 @@ public class Giorno implements Comparable<Giorno> {
 		return giorno.getDayOfMonth() + "-" + giorno.getMonthValue() + "-" + giorno.getYear();
 	}
 	
-	public static Giorno parseGiorno(String input) {
+	public static Giorno parseGiorno(String input) { //String stile aaaa-mm-gg
 	    String[] parts = input.split("-");
-	    int giorno = Integer.parseInt(parts[0]);
+	    int giorno = Integer.parseInt(parts[2]);
 	    int mese = Integer.parseInt(parts[1]);
-	    int anno = Integer.parseInt(parts[2]);
+	    int anno = Integer.parseInt(parts[0]);
 
 	    return new Giorno(anno, mese, giorno);
 	}
