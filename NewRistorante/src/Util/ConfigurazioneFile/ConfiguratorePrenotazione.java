@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
-import Prenotazioni.Giorno;
+import Giorno.Giorno;
 import Prenotazioni.Prenotazione;
 import Prenotazioni.SceltaPrenotazione;
 

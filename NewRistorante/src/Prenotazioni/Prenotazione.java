@@ -1,7 +1,8 @@
 package Prenotazioni;
 import java.util.HashMap;
 
-import Ristorante.Piatto;
+import Giorno.Giorno;
+import Ristorante.ElementiRistorante.Piatto;
 import Util.InputDati;
 
 public class Prenotazione {

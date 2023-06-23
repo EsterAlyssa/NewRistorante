@@ -2,11 +2,11 @@ package Utenti;
 
 import java.util.HashSet;
 
-import Ristorante.Periodo;
-import Ristorante.Piatto;
-import Ristorante.Ricetta;
+import Giorno.Periodo;
 import Ristorante.Ristorante;
-import Ristorante.MenuTematico;
+import Ristorante.ElementiRistorante.MenuTematico;
+import Ristorante.ElementiRistorante.Piatto;
+import Ristorante.ElementiRistorante.Ricetta;
 import Util.InputDati;
 
 public class Gestore extends Utente{

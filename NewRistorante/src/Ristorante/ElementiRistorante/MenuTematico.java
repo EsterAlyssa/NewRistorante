@@ -1,6 +1,8 @@
-package Ristorante;
+package Ristorante.ElementiRistorante;
 
 import java.util.HashSet;
+
+import Giorno.Periodo;
 import Prenotazioni.SceltaPrenotazione;
 
 public class MenuTematico extends Menu implements SceltaPrenotazione{

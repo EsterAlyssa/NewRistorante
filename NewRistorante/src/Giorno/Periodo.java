@@ -1,8 +1,7 @@
-package Ristorante;
+package Giorno;
 
 import java.util.TreeSet;
 
-import Prenotazioni.Giorno;
 import Util.InputDati;
 
 public class Periodo {

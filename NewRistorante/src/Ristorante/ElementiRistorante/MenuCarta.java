@@ -1,4 +1,7 @@
-package Ristorante;
+package Ristorante.ElementiRistorante;
+
+import Giorno.Periodo;
+
 public class MenuCarta extends Menu {
 
 	public MenuCarta(Periodo validita) {

@@ -1,6 +1,5 @@
 package Utenti;
 
-import Prenotazioni.Giorno;
 import Prenotazioni.Prenotazione;
 import Prenotazioni.SceltaPrenotazione;
 import Ristorante.Giornata;
@@ -8,6 +7,9 @@ import Ristorante.Ristorante;
 import Util.InputDati;
 
 import java.util.TreeSet;
+
+import Giorno.Giorno;
+
 import java.util.HashSet;
 
 public class AddettoPrenotazioni extends Utente {

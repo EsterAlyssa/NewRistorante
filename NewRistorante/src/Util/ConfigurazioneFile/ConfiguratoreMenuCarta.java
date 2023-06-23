@@ -4,9 +4,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashSet;
 
-import Ristorante.MenuCarta;
-import Ristorante.Periodo;
-import Ristorante.Piatto;
+import Giorno.Periodo;
+import Ristorante.ElementiRistorante.MenuCarta;
+import Ristorante.ElementiRistorante.Piatto;
 
 public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 

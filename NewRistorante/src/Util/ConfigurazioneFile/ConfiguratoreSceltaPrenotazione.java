@@ -2,8 +2,8 @@ package Util.ConfigurazioneFile;
 
 import java.io.BufferedWriter;
 import Prenotazioni.SceltaPrenotazione;
-import Ristorante.MenuTematico;
-import Ristorante.Piatto;
+import Ristorante.ElementiRistorante.MenuTematico;
+import Ristorante.ElementiRistorante.Piatto;
 
 public class ConfiguratoreSceltaPrenotazione extends ConfiguratoreManager {
 	

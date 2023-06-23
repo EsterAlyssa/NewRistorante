@@ -3,8 +3,8 @@ package Util.ConfigurazioneFile;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import Ristorante.Periodo;
-import Ristorante.Piatto;
+import Giorno.Periodo;
+import Ristorante.ElementiRistorante.Piatto;
 
 public class ConfiguratorePiatto extends ConfiguratoreManager{
 	

@@ -1,6 +1,8 @@
-package Ristorante;
+package Ristorante.ElementiRistorante;
 
 import java.util.HashSet;
+
+import Giorno.Periodo;
 
 public abstract class Menu {
 

@@ -2,7 +2,7 @@ package Prenotazioni;
 
 import java.util.HashSet;
 
-import Ristorante.Piatto;
+import Ristorante.ElementiRistorante.Piatto;
 
 public interface SceltaPrenotazione {
 	

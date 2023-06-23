@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
+import Giorno.Giorno;
 import Magazzino.RegistroMagazzino;
-import Prenotazioni.Giorno;
+import Ristorante.ElementiRistorante.MenuTematico;
+import Ristorante.ElementiRistorante.Piatto;
+import Ristorante.ElementiRistorante.Ricetta;
 
 public class Ristorante {
 

@@ -1,9 +1,14 @@
 package Ristorante;
 import java.util.HashSet;
 
+import Giorno.Giorno;
 import Magazzino.ListaSpesa;
-import Prenotazioni.Giorno;
+import Magazzino.Merce.Extra;
+import Magazzino.Merce.Ingrediente;
+import Magazzino.Merce.Merce;
 import Prenotazioni.Prenotazione;
+import Ristorante.ElementiRistorante.MenuCarta;
+import Ristorante.ElementiRistorante.MenuTematico;
 
 import java.util.HashMap;
 

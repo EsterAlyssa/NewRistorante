@@ -1,7 +1,7 @@
-package Ristorante;
+package Magazzino.Merce;
 import java.util.HashMap;
 
-import Prenotazioni.Giorno;
+import Giorno.Giorno;
 
 public abstract class Merce {
 

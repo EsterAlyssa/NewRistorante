@@ -1,9 +1,11 @@
-package Ristorante;
+package Magazzino.Merce;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import Prenotazioni.Giorno;
+import Giorno.Giorno;
 import Prenotazioni.Prenotazione;
+import Ristorante.ElementiRistorante.Piatto;
+import Ristorante.ElementiRistorante.Ricetta;
 
 public class Ingrediente extends Merce {
 

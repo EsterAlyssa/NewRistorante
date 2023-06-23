@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
+import Magazzino.Merce.Ingrediente;
+import Magazzino.Merce.Merce;
 import Ristorante.Giornata;
-import Ristorante.Ingrediente;
-import Ristorante.Merce;
 import Ristorante.Ristorante;
 
 public class RegistroMagazzino {

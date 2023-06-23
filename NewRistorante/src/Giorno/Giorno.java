@@ -1,4 +1,4 @@
-package Prenotazioni;
+package Giorno;
 import java.time.LocalDate;
 
 import Util.InputDati;

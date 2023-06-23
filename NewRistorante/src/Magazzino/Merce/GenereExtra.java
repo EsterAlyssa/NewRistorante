@@ -1,5 +1,5 @@
-package Ristorante;
-import Prenotazioni.Giorno;
+package Magazzino.Merce;
+import Giorno.Giorno;
 
 public class GenereExtra extends Extra {
 

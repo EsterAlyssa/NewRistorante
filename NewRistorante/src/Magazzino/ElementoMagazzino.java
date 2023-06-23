@@ -1,5 +1,5 @@
 package Magazzino;
-import Ristorante.Merce;
+import Magazzino.Merce.Merce;
 
 public class ElementoMagazzino {
 

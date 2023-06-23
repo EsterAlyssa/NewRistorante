@@ -1,4 +1,4 @@
-package Ristorante;
+package Ristorante.ElementiRistorante;
 import java.util.HashMap;
 import java.util.HashSet;
 

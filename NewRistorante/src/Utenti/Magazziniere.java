@@ -3,12 +3,12 @@ package Utenti;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import Giorno.Giorno;
 import Magazzino.ElementoMagazzino;
 import Magazzino.ListaSpesa;
 import Magazzino.RegistroMagazzino;
-import Prenotazioni.Giorno;
+import Magazzino.Merce.Merce;
 import Ristorante.Giornata;
-import Ristorante.Merce;
 import Ristorante.Ristorante;
 import Util.InputDati;
 
