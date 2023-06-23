@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashSet;
 
-import Ristorante.MenuCarta;
 import Ristorante.MenuTematico;
 import Ristorante.Periodo;
 import Ristorante.Piatto;
@@ -18,15 +17,15 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 	void scriviParametriNelFile(Object menuTematico, BufferedWriter writer) {
 		try {
 			MenuTematico menu = (MenuTematico) menuTematico;
-			writer.write("nome=" + menu.getNome());
+			writer.write("nomeMenuTematico=" + menu.getNome());
 			writer.newLine();
-			writer.write("validita=" + menu.getValidita());
+			writer.write("validitaMenu=" + menu.getValidita());
 			writer.newLine();
-			writer.write("caricoLavoro=" + menu.getCaricoLavoro());
+			writer.write("caricoLavoroMenuTematico=" + menu.getCaricoLavoro());
 			
 			HashSet<Piatto> elenco = ((MenuTematico) menu).getElenco();
-			writer.write("elenco=");
-			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
+			writer.write("elencoMenu=");
+			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
 			for (Piatto piatto : elenco) {
 				confPiat.scriviParametriNelFile(piatto, writer);
 			}
@@ -42,25 +41,25 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 		MenuTematico menu = new MenuTematico(nomeOggetto);
 		// Imposta l'attributo nell'oggetto menu tematico utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
-		case "nome":
+		case "nomeMenuTematico":
 			menu.setNome(valoreAttributo);
 			break;
-		case "validita":
+		case "validitaMenu":
 			// Chiamata al metodo statico parsePeriodo per ottenere un oggetto di tipo Periodo
 			menu.setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;
-		case "caricoLavoro":
+		case "caricoLavoroMenuTematico":
 			menu.setCaricoLavoro(Double.parseDouble(valoreAttributo));
 			break;
-		case "elenco":
+		case "elencoMenu":
 			HashSet<Piatto> elenco = new HashSet<>();
 			String[] piatti = valoreAttributo.split("\n");
-			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
+			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
 			for (String piatto : piatti) {
-				Piatto p = new Piatto(piatto); //l'oggetto piatto ha nel attributo nome tutta la stringa
 				int i=1;
 				String nomePiatto = "Piatto"+i;
-				confPiat.caricaIstanzaOggetto(nomePiatto, piatto);; //sovrascritto il nome dell'oggetto
+				Piatto p = new Piatto(nomePiatto); 
+				confPiat.caricaIstanzaOggetto(nomePiatto, piatto);
 				elenco.add(p);
 				i++;
 			}

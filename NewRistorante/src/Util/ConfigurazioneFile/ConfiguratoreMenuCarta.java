@@ -17,10 +17,10 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 	@Override
 	void scriviParametriNelFile(Object menuCarta, BufferedWriter writer) {
 		try {
-			writer.write("validita=" + ((MenuCarta) menuCarta).getValidita());
+			writer.write("validitaMenu=" + ((MenuCarta) menuCarta).getValidita());
 			writer.newLine();
 			HashSet<Piatto> elenco = ((MenuCarta) menuCarta).getElenco();
-			writer.write("elenco=");
+			writer.write("elencoMenu=");
 			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
 			for (Piatto piatto : elenco) {
 				confPiat.scriviParametriNelFile(piatto, writer);
@@ -37,7 +37,7 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 		MenuCarta menu = new MenuCarta();
 		// Imposta l'attributo nell'oggetto menu carta utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
-		case "elenco":
+		case "elencoMenu":
 			HashSet<Piatto> elenco = new HashSet<>();
 			String[] piatti = valoreAttributo.split("\n");
 			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
@@ -51,7 +51,7 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 			}
 			menu.setElenco(elenco);
 			break;    
-		case "validita":
+		case "validitaMenu":
 			// Chiamata al metodo statico parsePeriodo per ottenere un oggetto di tipo Periodo
 			menu.setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;

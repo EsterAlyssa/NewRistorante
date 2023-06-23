@@ -4,38 +4,38 @@ import java.util.HashSet;
 
 public abstract class Menu {
 
-	private HashSet<Piatto> elenco;
-	private Periodo validita;
+	private HashSet<Piatto> elencoMenu;
+	private Periodo validitaMenu;
 	
 	
-	public Menu(Periodo validita) {
-		this.elenco =  new HashSet<>();
-		this.validita = validita;
+	public Menu(Periodo validitaMenu) {
+		this.elencoMenu =  new HashSet<>();
+		this.validitaMenu = validitaMenu;
 	}
 	
 	public Menu() {
-		this.elenco =  new HashSet<>();
-		this.validita = new Periodo();
+		this.elencoMenu =  new HashSet<>();
+		this.validitaMenu = new Periodo();
 	}
 
 	public HashSet<Piatto> getElenco() { 
-		return elenco;
+		return elencoMenu;
 	}
 
 	public void setElenco(HashSet<Piatto> elenco) {
-		this.elenco = elenco;
+		this.elencoMenu = elenco;
 	}
 
 
 	public Periodo getValidita() {
-		return validita;
+		return validitaMenu;
 	}
 
-	public void setValidita(Periodo validita) {
-		this.validita = validita;
+	public void setValidita(Periodo validitaMenu) {
+		this.validitaMenu = validitaMenu;
 	}
 	
 	public void aggiungiPiatto(Piatto piatto) {
-		this.elenco.add(piatto);
+		this.elencoMenu.add(piatto);
 	}
 }

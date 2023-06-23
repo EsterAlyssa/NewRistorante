@@ -17,6 +17,13 @@ public class Prenotazione {
 		this.data = data;
 		this.elenco = new HashMap<>();
 	}
+	
+	public Prenotazione(String cliente) {
+		this.cliente = cliente;
+		this.numCoperti = 0;
+		this.data = null;
+		this.elenco = new HashMap<>();
+	}
 
 	public String getCliente() {
 		return cliente;

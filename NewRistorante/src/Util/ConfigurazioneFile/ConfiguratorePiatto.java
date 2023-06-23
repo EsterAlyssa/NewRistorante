@@ -15,11 +15,11 @@ public class ConfiguratorePiatto extends ConfiguratoreManager{
 	@Override
 	void scriviParametriNelFile(Object piatto, BufferedWriter writer) {
 		try {
-			writer.write("nome="+((Piatto) piatto).getNome());
+			writer.write("nomePiatto="+((Piatto) piatto).getNome());
 			writer.newLine();
-			writer.write("caricoLavoro="+((Piatto) piatto).getCaricoLavoro());
+			writer.write("caricoLavoroPiatto="+((Piatto) piatto).getCaricoLavoro());
 			writer.newLine();
-			writer.write("validita="+((Piatto) piatto).getValidita());
+			writer.write("validitaPiatto="+((Piatto) piatto).getValidita());
 		} catch (IOException e) {
 			System.out.println("Impossibile salvare l'oggetto piatto");
 			e.printStackTrace();
@@ -31,13 +31,13 @@ public class ConfiguratorePiatto extends ConfiguratoreManager{
 		Piatto piatto = new Piatto(nomeOggetto);
 		// Imposta l'attributo nell'oggetto singleton utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
-		case "nome":
+		case "nomePiatto":
 			piatto.setNome(valoreAttributo);
 			break;
-		case "caricoLavoro":
+		case "caricoLavoroPiatto":
 			piatto.setCaricoLavoro(Double.parseDouble(valoreAttributo));
 			break;
-		case "validita":
+		case "validitaPiatto":
 			piatto.setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;
 		default:

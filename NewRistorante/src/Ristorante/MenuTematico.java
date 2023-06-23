@@ -5,39 +5,39 @@ import Prenotazioni.SceltaPrenotazione;
 
 public class MenuTematico extends Menu implements SceltaPrenotazione{
 
-	private String nome;
-	private double caricoLavoro;
+	private String nomeMenuTematico;
+	private double caricoLavoroMenuTematico;
 
-	public MenuTematico(String nome,Periodo validita) {
+	public MenuTematico(String nomeMenuTematico,Periodo validita) {
 		super(validita);
-		this.nome = nome;
-		this.caricoLavoro = 0.0;
+		this.nomeMenuTematico = nomeMenuTematico;
+		this.caricoLavoroMenuTematico = 0.0;
 	}
 
-	public MenuTematico(String nome) {
+	public MenuTematico(String nomeMenuTematico) {
 		super();
-		this.nome = nome;
-		this.caricoLavoro = 0.0;
+		this.nomeMenuTematico = nomeMenuTematico;
+		this.caricoLavoroMenuTematico = 0.0;
 	}
 	
 	public String getNome() {
-		return nome;
+		return nomeMenuTematico;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeMenuTematico = nome;
 	}
 
 	public double getCaricoLavoro() {
-		return caricoLavoro;
+		return caricoLavoroMenuTematico;
 	}
 	
 	public void setCaricoLavoro(double caricoLavoro) {
-		this.caricoLavoro = caricoLavoro;
+		this.caricoLavoroMenuTematico = caricoLavoro;
 	}
 
 	public void aggiungiPiatto (Piatto piatto) {
-		this.caricoLavoro += piatto.getCaricoLavoro();
+		this.caricoLavoroMenuTematico += piatto.getCaricoLavoro();
 		super.aggiungiPiatto(piatto);
 	}
 
@@ -54,7 +54,7 @@ public class MenuTematico extends Menu implements SceltaPrenotazione{
 	
 	@Override
 	public String toString() {
-		String stringa = "Menu Tematico: "+ nome + "\nCarico di lavoro del menu tematico: " + caricoLavoro + "\nPiatti:\n";
+		String stringa = "Menu Tematico: "+ nomeMenuTematico + "\nCarico di lavoro del menu tematico: " + caricoLavoroMenuTematico + "\nPiatti:\n";
 		for (Piatto piatto : getElenco()) {
 			stringa += piatto.getNome() + "\n";
 		}

@@ -1,12 +1,11 @@
 package Magazzino;
 import java.util.HashMap;
-import Prenotazioni.Giorno;
 
 public class ListaSpesa {
 
 	private HashMap<String, Double> lista;
 
-	public ListaSpesa(Giorno data) {
+	public ListaSpesa() {
 		this.lista = new HashMap<>();
 	}
 
