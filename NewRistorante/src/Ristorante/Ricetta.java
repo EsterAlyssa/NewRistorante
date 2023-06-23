@@ -18,6 +18,13 @@ public class Ricetta {
 		this.caricoLavoroPorzione = caricoLavoroPorzione;
 	}
 
+	public Ricetta(String nome) {
+		this.nome = nome;
+		this.ingredienti = new HashMap<>();
+		this.numPorzioni = 0; //da settare poi
+		this.caricoLavoroPorzione = 0.0; //da settare poi
+	}
+
 	public String getNome() {
 		return nome;
 	}

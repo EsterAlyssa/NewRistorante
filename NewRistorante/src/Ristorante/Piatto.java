@@ -15,6 +15,12 @@ public class Piatto implements SceltaPrenotazione{
 		this.caricoLavoro = caricoLavoro;
 		this.validita = new Periodo();
 	}
+	
+	public Piatto (String nome) {
+		this.nome = nome;
+		this.caricoLavoro = 0.0; //da settare poi 
+		this.validita = new Periodo();
+	}
 
 	@Override
 	public String getNome() {

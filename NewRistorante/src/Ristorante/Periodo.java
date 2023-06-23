@@ -46,5 +46,17 @@ public class Periodo {
 		return daTornare;
 	}
 	
+	public static Periodo parsePeriodo(String input) {
+	    Periodo periodo = new Periodo();
+
+	    String[] giorni = input.split(";");
+	    for (String giornoStr : giorni) {
+	        Giorno giorno = Giorno.parseGiorno(giornoStr);
+	        periodo.getPeriodoValidita().add(giorno);
+	    }
+
+	    return periodo;
+	}
+	
 	
 }

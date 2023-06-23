@@ -12,6 +12,11 @@ public abstract class Menu {
 		this.elenco =  new HashSet<>();
 		this.validita = validita;
 	}
+	
+	public Menu() {
+		this.elenco =  new HashSet<>();
+		this.validita = new Periodo();
+	}
 
 	public HashSet<Piatto> getElenco() { 
 		return elenco;

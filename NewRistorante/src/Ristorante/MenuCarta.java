@@ -4,6 +4,11 @@ public class MenuCarta extends Menu {
 	public MenuCarta(Periodo validita) {
 		super(validita);
 	}
+	
+	public MenuCarta() {
+		super();
+	}
+	
 
 	@Override
 	public String toString() {

@@ -14,6 +14,12 @@ public class MenuTematico extends Menu implements SceltaPrenotazione{
 		this.caricoLavoro = 0.0;
 	}
 
+	public MenuTematico(String nome) {
+		super();
+		this.nome = nome;
+		this.caricoLavoro = 0.0;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -24,6 +30,10 @@ public class MenuTematico extends Menu implements SceltaPrenotazione{
 
 	public double getCaricoLavoro() {
 		return caricoLavoro;
+	}
+	
+	public void setCaricoLavoro(double caricoLavoro) {
+		this.caricoLavoro = caricoLavoro;
 	}
 
 	public void aggiungiPiatto (Piatto piatto) {
