@@ -37,19 +37,18 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		MenuTematico menu = new MenuTematico(nomeOggetto);
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		// Imposta l'attributo nell'oggetto menu tematico utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
 		case "nomeMenuTematico":
-			menu.setNome(valoreAttributo);
+			((MenuTematico) oggetto).setNome(valoreAttributo);
 			break;
 		case "validitaMenu":
 			// Chiamata al metodo statico parsePeriodo per ottenere un oggetto di tipo Periodo
-			menu.setValidita(Periodo.parsePeriodo(valoreAttributo));
+			((MenuTematico) oggetto).setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;
 		case "caricoLavoroMenuTematico":
-			menu.setCaricoLavoro(Double.parseDouble(valoreAttributo));
+			((MenuTematico) oggetto).setCaricoLavoro(Double.parseDouble(valoreAttributo));
 			break;
 		case "elencoMenu":
 			HashSet<Piatto> elenco = new HashSet<>();
@@ -63,12 +62,17 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 				elenco.add(p);
 				i++;
 			}
-			menu.setElenco(elenco);
+			((MenuTematico) oggetto).setElenco(elenco);
 			break;   
 		default:
 			System.out.println("Errore nel settaggio dei parametri");
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new MenuTematico(nomeOggetto);
 	}
 
 }

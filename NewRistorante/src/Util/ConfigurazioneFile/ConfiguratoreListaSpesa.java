@@ -27,19 +27,22 @@ public class ConfiguratoreListaSpesa extends ConfiguratoreManager{
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		ListaSpesa lista = new ListaSpesa();
-
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		switch (nomeAttributo) {
 		case "lista":
 			HashMap<String, Double> mapLista = new HashMap<>();
 			ConfiguratoreHashMapStringDouble conf = new ConfiguratoreHashMapStringDouble();
-			mapLista = conf.setAttributiDatoOggetto(nomeOggetto, nomeAttributo, valoreAttributo, mapLista);
-			lista.setLista(mapLista);
+			conf.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, mapLista);
+			((ListaSpesa) oggetto).setLista(mapLista);
 			break;
 		default:
 			System.out.println("Attributo non riconosciuto: " + nomeAttributo);
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new ListaSpesa();
 	}
 }

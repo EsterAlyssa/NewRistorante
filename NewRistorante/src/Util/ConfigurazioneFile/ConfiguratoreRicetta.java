@@ -36,18 +36,17 @@ public class ConfiguratoreRicetta extends ConfiguratoreManager {
     }
 
 	@Override
-    public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-        Ricetta ricetta = new Ricetta(nomeOggetto);
+    public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
         // Imposta l'attributo nell'oggetto ricetta utilizzando i metodi setter corrispondenti
         switch (nomeAttributo) {
             case "nome":
-                ricetta.setNome(valoreAttributo);
+            	((Ricetta) oggetto).setNome(valoreAttributo);
                 break;
             case "numPorzioni":
-                ricetta.setNumPorzioni(Integer.parseInt(valoreAttributo));
+            	((Ricetta) oggetto).setNumPorzioni(Integer.parseInt(valoreAttributo));
                 break;
             case "caricoLavoroPorzione":
-                ricetta.setCaricoLavoroPorzione(Double.parseDouble(valoreAttributo));
+            	((Ricetta) oggetto).setCaricoLavoroPorzione(Double.parseDouble(valoreAttributo));
                 break;
             case "ingredienti":
                 // Il valoreAttributo contiene gli ingredienti nel formato "nomeIngrediente=dose"
@@ -59,12 +58,17 @@ public class ConfiguratoreRicetta extends ConfiguratoreManager {
                     double dose = Double.parseDouble(parte[1]);
                     mapIngredienti.put(nomeIngrediente, dose);
                 }
-                ricetta.setIngredienti(mapIngredienti);
+                ((Ricetta) oggetto).setIngredienti(mapIngredienti);
                 break;
             default:
                 System.out.println("Errore nel settaggio dei parametri");
                 break;
         }
     }
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new Ricetta(nomeOggetto);
+	}
 
 }

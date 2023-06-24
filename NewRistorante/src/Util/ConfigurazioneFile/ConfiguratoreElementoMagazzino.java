@@ -29,36 +29,29 @@ public class ConfiguratoreElementoMagazzino extends ConfiguratoreManager{
 		}
 	}
 
-	@Override
 	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
 		ElementoMagazzino elementoMagazzino = new ElementoMagazzino(null, 0.0);
+		setAttributiDatoOggetto(nomeAttributo, valoreAttributo, elementoMagazzino);
+	}
+	
+	@Override
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object elementoMagazzino) {
 		switch (nomeAttributo) {
 		case "merce":
 			Merce merce = null;
 			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
 	        String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
-			merce = configuratoreMerce.setAttributiDatoOggetto(nomeOggetto, nomeAttributoSenzaPrefisso, valoreAttributo, merce);
-			elementoMagazzino.setMerce(merce);
+			configuratoreMerce.setAttributiDatoOggetto(nomeAttributoSenzaPrefisso, valoreAttributo, merce);
+			((ElementoMagazzino) elementoMagazzino).setMerce(merce);
 			break;
 		case "quantita":
-			elementoMagazzino.setQuantita(Double.parseDouble(valoreAttributo));
+			((ElementoMagazzino) elementoMagazzino).setQuantita(Double.parseDouble(valoreAttributo));
 			break;
 		}
 	}
-	
-	public ElementoMagazzino setAttributiDatoOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo, ElementoMagazzino elementoMagazzino) {
-		switch (nomeAttributo) {
-		case "merce":
-			Merce merce = null;
-			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
-	        String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
-			merce = configuratoreMerce.setAttributiDatoOggetto(nomeOggetto, nomeAttributoSenzaPrefisso, valoreAttributo, merce);
-			elementoMagazzino.setMerce(merce);
-			break;
-		case "quantita":
-			elementoMagazzino.setQuantita(Double.parseDouble(valoreAttributo));
-			break;
-		}
-		return elementoMagazzino;
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new ElementoMagazzino(null, 0.0);
 	}
 }

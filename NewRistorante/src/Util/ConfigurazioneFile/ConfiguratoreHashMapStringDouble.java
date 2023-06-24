@@ -12,9 +12,9 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 	}
 
 	@Override
-	void scriviParametriNelFile(Object oggettoExtra, BufferedWriter writer) {
+	void scriviParametriNelFile(Object oggettoMappa, BufferedWriter writer) {
 		try {
-			HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoExtra;
+			HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoMappa;
 			for (String nomeProdotto : mappa.keySet()) {
 				writer.write(nomeProdotto + "->" + mappa.get(nomeProdotto));
 				writer.append(';');
@@ -27,20 +27,21 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		HashMap<String, Double> mappa = new HashMap<>();
-        mappa = setAttributiDatoOggetto(nomeOggetto, nomeAttributo, valoreAttributo, mappa);
-	}
-	
-	public HashMap<String, Double> setAttributiDatoOggetto (String nomeOggetto, String nomeAttributo, String valoreAttributo, HashMap<String, Double> mappa) {
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		String[] elementi = valoreAttributo.split(";\n");
         for (String elemento : elementi) {
             String[] coppia = elemento.split("->");
             String chiave = coppia[0].trim();
             double valore = Double.parseDouble(coppia[1].trim());
-            mappa.put(chiave, valore);
+            ((HashMap<String, Double>) oggetto).put(chiave, valore);
         }
-        return mappa;
+	}
+
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		HashMap<String, Double> mappa = new HashMap<>();
+		return mappa;
 	}
 
 

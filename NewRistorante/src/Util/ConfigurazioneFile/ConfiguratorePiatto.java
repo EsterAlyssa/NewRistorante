@@ -27,23 +27,27 @@ public class ConfiguratorePiatto extends ConfiguratoreManager{
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		Piatto piatto = new Piatto(nomeOggetto);
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		// Imposta l'attributo nell'oggetto singleton utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
 		case "nomePiatto":
-			piatto.setNome(valoreAttributo);
+			((Piatto) oggetto).setNome(valoreAttributo);
 			break;
 		case "caricoLavoroPiatto":
-			piatto.setCaricoLavoro(Double.parseDouble(valoreAttributo));
+			((Piatto) oggetto).setCaricoLavoro(Double.parseDouble(valoreAttributo));
 			break;
 		case "validitaPiatto":
-			piatto.setValidita(Periodo.parsePeriodo(valoreAttributo));
+			((Piatto) oggetto).setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;
 		default:
 			System.out.println("Errore nel settaggio dei parametri");
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new Piatto(nomeOggetto);
 	}
 
 

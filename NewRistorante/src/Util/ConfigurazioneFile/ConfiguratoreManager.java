@@ -17,30 +17,35 @@ public abstract class ConfiguratoreManager {
 
 	abstract void scriviParametriNelFile(Object oggetto, BufferedWriter writer);
 
-	public void caricaIstanzaOggettoDaFile(String pathOggetto) {
+	public Object caricaIstanzaOggettoDaFile(String pathOggetto) {
+		Object oggettoCaricato = null;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(pathOggetto));
 			String nomeOggetto = ServizioFile.getNomeFileSenzaEstensione(pathOggetto);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				caricaIstanzaOggetto(nomeOggetto, line);
+				oggettoCaricato = caricaIstanzaOggetto(nomeOggetto, line);
 			}
 			reader.close();
 		} catch (IOException e) {
 			System.out.println("Impossibile caricare l'oggetto");
 		}
+		return oggettoCaricato;
 	}
 
-	public void caricaIstanzaOggetto(String nomeOggetto, String line) {
+	public Object caricaIstanzaOggetto(String nomeOggetto, String line) {
+		Object oggetto = creaIstanzaOggetto(nomeOggetto);
 		String[] parte = line.split("=");
 		if (parte.length == 2) {
 			String nomeAttributo = parte[0].trim();
 			String valoreAttributo = parte[1].trim();
 			// Imposta l'attributo corrispondente nell'oggetto
-			setAttributiOggetto(nomeOggetto, nomeAttributo, valoreAttributo);
+			setAttributiDatoOggetto(nomeAttributo, valoreAttributo, oggetto);
 		}
+		return oggetto;
 	}
 
-	public abstract void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo);
+	public abstract void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto);
+	public abstract Object creaIstanzaOggetto(String nomeOggetto);
 
 }

@@ -29,26 +29,30 @@ public class ConfiguratoreRistorante extends ConfiguratoreManager {
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		Ristorante ristorante = Ristorante.getInstance(nomeOggetto);
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		// Imposta l'attributo nell'oggetto singleton utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
 		case "nome":
-			ristorante.setNome(valoreAttributo);
+			((Ristorante) oggetto).setNome(valoreAttributo);
 			break;
 		case "caricoLavoroPersona":
-			ristorante.setCaricoLavoroPersona(Integer.parseInt(valoreAttributo));
+			((Ristorante) oggetto).setCaricoLavoroPersona(Integer.parseInt(valoreAttributo));
 			break;
 		case "numPosti":
-			ristorante.setNumPosti(Integer.parseInt(valoreAttributo));
+			((Ristorante) oggetto).setNumPosti(Integer.parseInt(valoreAttributo));
 			break;
 		case "caricoLavoroRistorante":
-			ristorante.setCaricoLavoroRistorante(Double.parseDouble(valoreAttributo));
+			((Ristorante) oggetto).setCaricoLavoroRistorante(Double.parseDouble(valoreAttributo));
 			break;
 		default:
 			System.out.println("Errore nel settaggio dei parametri");
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {	
+		return Ristorante.getInstance(nomeOggetto);
 	}
 
 

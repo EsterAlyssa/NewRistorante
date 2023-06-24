@@ -34,8 +34,7 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		MenuCarta menu = new MenuCarta();
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		// Imposta l'attributo nell'oggetto menu carta utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
 		case "elencoMenu":
@@ -50,15 +49,20 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 				elenco.add(p);
 				i++;
 			}
-			menu.setElenco(elenco);
+			((MenuCarta) oggetto).setElenco(elenco);
 			break;    
 		case "validitaMenu":
 			// Chiamata al metodo statico parsePeriodo per ottenere un oggetto di tipo Periodo
-			menu.setValidita(Periodo.parsePeriodo(valoreAttributo));
+			((MenuCarta) oggetto).setValidita(Periodo.parsePeriodo(valoreAttributo));
 			break;
 		default:
 			System.out.println("Errore nel settaggio dei parametri");
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new MenuCarta();
 	}
 }

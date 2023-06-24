@@ -25,11 +25,14 @@ public class ConfiguratorePrenotazione extends ConfiguratoreManager{
 
 			HashMap<SceltaPrenotazione, Integer> elenco = ((Prenotazione) prenotazione).getElenco();
 			writer.write("elenco=");
+			writer.newLine();
 			ConfiguratoreManager confScelta = new ConfiguratoreSceltaPrenotazione();
 			for (SceltaPrenotazione scelta : elenco.keySet()) {
 				writer.write("quantitaPrenotate->" + elenco.get(scelta));
+				writer.newLine();
 				confScelta.scriviParametriNelFile(scelta, writer);
 				writer.append(';');
+				writer.newLine();
 				writer.newLine();
 			}
 		} catch (IOException e) {
@@ -40,35 +43,42 @@ public class ConfiguratorePrenotazione extends ConfiguratoreManager{
 
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		Prenotazione prenotazione = new Prenotazione(nomeOggetto);
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		// Imposta l'attributo nell'oggetto menu carta utilizzando i metodi setter corrispondenti
 		switch (nomeAttributo) {
 		case "cliente":
-			prenotazione.setCliente(valoreAttributo);
+			((Prenotazione)oggetto).setCliente(valoreAttributo);
 			break;
 		case "numCoperti":
-			prenotazione.setNumCoperti(Integer.parseInt(valoreAttributo));
+			((Prenotazione)oggetto).setNumCoperti(Integer.parseInt(valoreAttributo));
 			break;
 		case "data":
-			prenotazione.setData(Giorno.parseGiorno(valoreAttributo));
+			((Prenotazione)oggetto).setData(Giorno.parseGiorno(valoreAttributo));
 			break;
 		case "elenco":
 			HashMap<SceltaPrenotazione, Integer> elenco = new HashMap<>();
-			String[] sceltePrenotate = valoreAttributo.split(";\n");
+			String[] sceltePrenotate = valoreAttributo.split(";\n\n");
 			ConfiguratoreManager confScelta = new ConfiguratoreSceltaPrenotazione();
 			for (String scelta : sceltePrenotate) {
-				String[] coppia = scelta.split("->");
-				String nomeScelta = coppia[0].trim();
-				int numPersone = Integer.parseInt(coppia[1].trim());
+				String[] coppia = scelta.split("=");
+				String descrizioneScelta = coppia[0].trim();
+				String quantitaScelta = coppia[1].trim();
 				
-				SceltaPrenotazione sceltaPren = null;
-                confScelta.setAttributiOggetto(nomeScelta, nomeAttributo, valoreAttributo);
+				String[] perQuantitaSelta = quantitaScelta.split("->");
+				int numScelta = Integer.parseInt(perQuantitaSelta[1].trim());
+				
+				SceltaPrenotazione sceltaPren = (SceltaPrenotazione) confScelta.creaIstanzaOggetto(descrizioneScelta);
+				confScelta.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, sceltaPren);
 
-				elenco.put(sceltaPren, numPersone);
+				elenco.put(sceltaPren, numScelta);
 			}
-			prenotazione.setElenco(elenco);
+			((Prenotazione)oggetto).setElenco(elenco);
 			break;
 		}
+	}
+
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		return new Prenotazione(nomeOggetto);
 	}
 }

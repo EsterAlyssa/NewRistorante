@@ -25,7 +25,7 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 			}
 
 			if (merce != null) {
-				writer.write(merce.getClass().getName());
+				writer.write("Sotto-categoria=" + merce.getClass().getName());
 				writer.newLine();
 				writer.write("nomeMerce=" + merce.getNome());
 				writer.newLine();
@@ -42,45 +42,47 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 	}
 
 	@Override
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		Merce merce = null;
-		merce = setAttributiDatoOggetto (nomeOggetto, nomeAttributo, valoreAttributo, merce);
+	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object merce) {
+		if (merce != null) {
+			switch (nomeAttributo) {
+			case "Sotto-categoria":
+				break;
+			case "nomeMerce":
+				((Merce) merce).setNome(valoreAttributo);
+				break;
+			case "unitaMisura":
+				((Merce) merce).setUnitaMisura(valoreAttributo);
+				break;
+			case "scadenza":
+				((Merce) merce).setScadenza(Giorno.Giorno.parseGiorno(valoreAttributo));
+				break;
+			case "qualita":
+				((Merce) merce).setQualita(Boolean.parseBoolean(valoreAttributo));
+				break;
+			default:
+				System.out.println("Attributo non riconosciuto");
+				break;
+			}
+		}
 	}
 
-	public Merce setAttributiDatoOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo, Merce merce) {
+	@Override
+	public Object creaIstanzaOggetto(String nomeOggetto) {
+		Merce merce = null;
 		switch (nomeOggetto) {
-		case "Ingrediente":
-			merce = new Ingrediente(nomeOggetto, ""); // Crea un'istanza di Ingrediente vuota
+		case "Magazzino.Merce.Ingrediente":
+			merce = new Ingrediente("", ""); // Crea un'istanza di Ingrediente vuota
 			break;
-		case "Bevanda":
-			merce = new Bevanda(nomeOggetto, 0.0); // Crea un'istanza di Bevanda vuota
+		case "Magazzino.Merce.Bevanda":
+			merce = new Bevanda("", 0.0); // Crea un'istanza di Bevanda vuota
 			break;
-		case "GenereExtra":
-			merce = new GenereExtra(nomeOggetto, 0.0); // Crea un'istanza di GenereExtra vuota
+		case "Magazzino.Merce.GenereExtra":
+			merce = new GenereExtra("", 0.0); // Crea un'istanza di GenereExtra vuota
 			break;
 		default:
 			System.out.println("Tipo di merce non riconosciuto");
 			break;
 		}
-		if (merce != null) {
-	        switch (nomeAttributo) {
-	            case "nomeMerce":
-	                merce.setNome(valoreAttributo);
-	                break;
-	            case "unitaMisura":
-	                merce.setUnitaMisura(valoreAttributo);
-	                break;
-	            case "scadenza":
-	                merce.setScadenza(Giorno.Giorno.parseGiorno(valoreAttributo));
-	                break;
-	            case "qualita":
-	                merce.setQualita(Boolean.parseBoolean(valoreAttributo));
-	                break;
-	            default:
-	                System.out.println("Attributo non riconosciuto");
-	                break;
-	        }
-	    }
 		return merce;
 	}
 

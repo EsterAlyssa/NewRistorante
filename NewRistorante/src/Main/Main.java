@@ -10,23 +10,23 @@ import Util.ConfigurazioneFile.ConfiguratoreRistorante;
 
 public class Main {
 
-	private static final String RISTORANTE_DIRECTORY_PATH = "./FileRistorante/";
+	private static final String appDirectoryPath = "./FileRistorante/";
 	private static Ristorante ristorante;
 
 	public static void main(String[] args) {
-		if (ServizioFile.ePrimaApertura(RISTORANTE_DIRECTORY_PATH)) {
+		if (ServizioFile.ePrimaApertura(appDirectoryPath)) {
 			ristorante = creaRistorante();
 		} else {
 			ristorante = accediRistorante();
 		}
-		Utente.mostraMenuRuoli(RISTORANTE_DIRECTORY_PATH);
+		Utente.mostraMenuRuoli(appDirectoryPath);
 
 	}
 
 	private static Ristorante creaRistorante() {
 		String messaggioBenvenuto = "Benvenuto! Inserisci il nome del ristorante: ";
 		String nomeRistorante = InputDati.leggiStringaNonVuota(messaggioBenvenuto);
-		String percorsoCompleto = RISTORANTE_DIRECTORY_PATH + nomeRistorante + ".txt";
+		String percorsoCompleto = appDirectoryPath+nomeRistorante + ".txt";
 		Ristorante ristorante = Ristorante.getInstance(nomeRistorante);
 		Gestore.inizializzaRistorante(ristorante);
 		ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();
@@ -36,9 +36,9 @@ public class Main {
 
 	private static Ristorante accediRistorante() {
 		Ristorante ristoranteTrovato = null;
-		String nomeRistorante = ServizioFile.getNomeFile(RISTORANTE_DIRECTORY_PATH);
+		String nomeRistorante = ServizioFile.getNomeFile(appDirectoryPath);
 		if (nomeRistorante != null) {
-			String percorsoCompleto = RISTORANTE_DIRECTORY_PATH + nomeRistorante + ".txt";
+			String percorsoCompleto = appDirectoryPath+ nomeRistorante + ".txt";
 			ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();
 			configurazioneManager.caricaIstanzaOggettoDaFile(percorsoCompleto);
 			ristoranteTrovato = Ristorante.getInstance(nomeRistorante);
