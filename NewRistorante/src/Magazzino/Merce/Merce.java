@@ -5,39 +5,39 @@ import Giorno.Giorno;
 
 public abstract class Merce {
 
-	private String nome;
+	private String nomeMerce;
 	private String unitaMisura;
 	private Giorno scadenza;
 	private boolean qualita = true;
 
 	//creiamo un costruttore per inizializzare alcuni gli attributi → l'unità di misura andra' settata con il set
 	public Merce(String nome, Giorno scadenza) {
-		this.nome = nome;
+		this.nomeMerce = nome;
 		this.scadenza = scadenza;
 		this.qualita = true;
 	}
 
 	//creiamo un costruttore per inizializzare alcuni gli attributi
 	public Merce(String nome, String unitaMisura) {
-		this.nome = nome;
+		this.nomeMerce = nome;
 		this.unitaMisura = unitaMisura;
 		this.qualita = true;
 	}
 
 	//creiamo un costruttore per inizializzare tutti gli attributi
 	public Merce(String nome, String unitaMisura, Giorno scadenza) {
-		this.nome = nome;
+		this.nomeMerce = nome;
 		this.unitaMisura = unitaMisura;
 		this.scadenza = scadenza;
 		this.qualita = true;
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeMerce;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeMerce = nome;
 	}
 
 	public String getUnitaMisura() {
@@ -96,7 +96,7 @@ public abstract class Merce {
 	}
 	
 	public boolean confrontoMerci(Merce altraMerce) {
-		if (this.nome == altraMerce.getNome() & this.unitaMisura == altraMerce.getUnitaMisura() & this.scadenza == altraMerce.getScadenza()) {
+		if (this.nomeMerce == altraMerce.getNome() & this.unitaMisura == altraMerce.getUnitaMisura() & this.scadenza == altraMerce.getScadenza()) {
 			return true;
 		}
 		else return false;

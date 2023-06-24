@@ -44,8 +44,21 @@ public class ConfiguratoreElementoMagazzino extends ConfiguratoreManager{
 			elementoMagazzino.setQuantita(Double.parseDouble(valoreAttributo));
 			break;
 		}
-
 	}
-
-
+	
+	public ElementoMagazzino setAttributiDatoOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo, ElementoMagazzino elementoMagazzino) {
+		switch (nomeAttributo) {
+		case "merce":
+			Merce merce = null;
+			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
+	        String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
+			merce = configuratoreMerce.setAttributiDatoOggetto(nomeOggetto, nomeAttributoSenzaPrefisso, valoreAttributo, merce);
+			elementoMagazzino.setMerce(merce);
+			break;
+		case "quantita":
+			elementoMagazzino.setQuantita(Double.parseDouble(valoreAttributo));
+			break;
+		}
+		return elementoMagazzino;
+	}
 }

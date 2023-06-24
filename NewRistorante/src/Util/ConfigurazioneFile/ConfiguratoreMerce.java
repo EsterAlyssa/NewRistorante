@@ -27,7 +27,7 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 			if (merce != null) {
 				writer.write(merce.getClass().getName());
 				writer.newLine();
-				writer.write("nome=" + merce.getNome());
+				writer.write("nomeMerce=" + merce.getNome());
 				writer.newLine();
 				writer.write("unitaMisura=" + merce.getUnitaMisura());
 				writer.newLine();
@@ -64,7 +64,7 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 		}
 		if (merce != null) {
 	        switch (nomeAttributo) {
-	            case "nome":
+	            case "nomeMerce":
 	                merce.setNome(valoreAttributo);
 	                break;
 	            case "unitaMisura":

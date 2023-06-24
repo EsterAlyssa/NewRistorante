@@ -8,7 +8,7 @@ public abstract class ConfiguratoreManager {
 
 	public void salvaIstanzaOggetto(Object oggetto, String pathRistorante) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathRistorante))) {
-			// Scrittura dei parametri del ristorante nel file
+			// Scrittura dei parametri nel file
 			scriviParametriNelFile(oggetto, writer);
 		} catch (IOException e) {
 			System.out.println("Impossibile salvare l'oggetto");
