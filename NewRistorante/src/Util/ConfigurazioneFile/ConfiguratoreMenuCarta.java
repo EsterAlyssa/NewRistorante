@@ -17,13 +17,14 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 	@Override
 	void scriviParametriNelFile(Object menuCarta, BufferedWriter writer) {
 		try {
-			writer.write("validitaMenu=" + ((MenuCarta) menuCarta).getValidita());
+			writer.write("validitaMenu=" + ((MenuCarta) menuCarta).getValidita().toString());
 			writer.newLine();
 			HashSet<Piatto> elenco = ((MenuCarta) menuCarta).getElenco();
 			writer.write("elencoMenu=");
 			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
 			for (Piatto piatto : elenco) {
 				confPiat.scriviParametriNelFile(piatto, writer);
+				writer.append(';');
 				writer.newLine();
 			}
 		} catch (IOException e) {
@@ -39,7 +40,7 @@ public class ConfiguratoreMenuCarta extends ConfiguratoreManager {
 		switch (nomeAttributo) {
 		case "elencoMenu":
 			HashSet<Piatto> elenco = new HashSet<>();
-			String[] piatti = valoreAttributo.split("\n");
+			String[] piatti = valoreAttributo.split(";\n");
 			ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
 			for (String piatto : piatti) {
 				Piatto p = new Piatto(piatto); //l'oggetto piatto ha nel attributo nome tutta la stringa

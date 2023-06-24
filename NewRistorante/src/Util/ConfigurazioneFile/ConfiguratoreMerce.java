@@ -43,7 +43,11 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 
 	@Override
 	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		Merce merce= null;
+		Merce merce = null;
+		merce = setAttributiDatoOggetto (nomeOggetto, nomeAttributo, valoreAttributo, merce);
+	}
+
+	public Merce setAttributiDatoOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo, Merce merce) {
 		switch (nomeOggetto) {
 		case "Ingrediente":
 			merce = new Ingrediente(nomeOggetto, ""); // Crea un'istanza di Ingrediente vuota
@@ -77,6 +81,7 @@ public class ConfiguratoreMerce extends ConfiguratoreManager {
 	                break;
 	        }
 	    }
+		return merce;
 	}
 
 }

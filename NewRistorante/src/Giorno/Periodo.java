@@ -45,10 +45,10 @@ public class Periodo {
 		return daTornare;
 	}
 	
-	public static Periodo parsePeriodo(String input) { //String stile aaaa-mm-gg;aaaa-mm-gg ...
+	public static Periodo parsePeriodo(String input) { //String stile aaaa-mm-gg;\naaaa-mm-gg ...
 	    Periodo periodo = new Periodo();
 
-	    String[] giorni = input.split(";");
+	    String[] giorni = input.split(";\n");
 	    for (String giornoStr : giorni) {
 	        Giorno giorno = Giorno.parseGiorno(giornoStr);
 	        periodo.getPeriodoValidita().add(giorno);

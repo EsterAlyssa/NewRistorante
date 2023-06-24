@@ -15,23 +15,35 @@ public class ConfiguratoreElementoMagazzino extends ConfiguratoreManager{
 	@Override
 	void scriviParametriNelFile(Object oggetto, BufferedWriter writer) {
 		try {
-			writer.write("merce=");
-			writer.newLine();
-			ConfiguratoreManager confMerce = new ConfiguratoreMerce();
-			Merce merce = ((ElementoMagazzino) oggetto ).getMerce();
-			confMerce.scriviParametriNelFile(merce, writer);
-			writer.newLine();
-			writer.write("quantita="+((ElementoMagazzino) oggetto).getQuantita());
+			ElementoMagazzino elementoMagazzino = (ElementoMagazzino) oggetto;
+			Merce merce = elementoMagazzino.getMerce();
+
+			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
+			configuratoreMerce.scriviParametriNelFile(merce, writer);
+
+			writer.write("quantita=" + elementoMagazzino.getQuantita());
 			writer.newLine();
 		} catch (IOException e) {
-			System.out.println("Impossibile salvare l'oggetto piatto");
+			System.out.println("Impossibile salvare l'oggetto Elemento Magazzino");
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		// TODO Auto-generated method stub
+		ElementoMagazzino elementoMagazzino = new ElementoMagazzino(null, 0.0);
+		switch (nomeAttributo) {
+		case "merce":
+			Merce merce = null;
+			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
+	        String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
+			merce = configuratoreMerce.setAttributiDatoOggetto(nomeOggetto, nomeAttributoSenzaPrefisso, valoreAttributo, merce);
+			elementoMagazzino.setMerce(merce);
+			break;
+		case "quantita":
+			elementoMagazzino.setQuantita(Double.parseDouble(valoreAttributo));
+			break;
+		}
 
 	}
 

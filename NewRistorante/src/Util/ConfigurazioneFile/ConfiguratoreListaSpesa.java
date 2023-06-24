@@ -34,7 +34,7 @@ public class ConfiguratoreListaSpesa extends ConfiguratoreManager{
 		case "lista":
 			HashMap<String, Double> mapLista = new HashMap<>();
 			ConfiguratoreHashMapStringDouble conf = new ConfiguratoreHashMapStringDouble();
-			conf.setAttributiDatoOggetto(nomeOggetto, valoreAttributo, valoreAttributo, mapLista);
+			mapLista = conf.setAttributiDatoOggetto(nomeOggetto, nomeAttributo, valoreAttributo, mapLista);
 			lista.setLista(mapLista);
 			break;
 		default:

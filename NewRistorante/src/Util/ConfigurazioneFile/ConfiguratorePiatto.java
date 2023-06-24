@@ -19,7 +19,7 @@ public class ConfiguratorePiatto extends ConfiguratoreManager{
 			writer.newLine();
 			writer.write("caricoLavoroPiatto="+((Piatto) piatto).getCaricoLavoro());
 			writer.newLine();
-			writer.write("validitaPiatto="+((Piatto) piatto).getValidita());
+			writer.write("validitaPiatto="+((Piatto) piatto).getValidita().toString());
 		} catch (IOException e) {
 			System.out.println("Impossibile salvare l'oggetto piatto");
 			e.printStackTrace();

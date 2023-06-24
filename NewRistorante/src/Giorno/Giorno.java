@@ -16,7 +16,7 @@ public class Giorno implements Comparable<Giorno> {
 		this.giorno = giorno;
 	}
 	
-	public Giorno (int anno, int mese, int giorno) { //aaaa/mm/gg
+	public Giorno (int anno, int mese, int giorno) { //aaaa-mm-gg
 		this.giorno = LocalDate.of(anno, mese, giorno);
 	}
 
