@@ -129,7 +129,7 @@ public class Ristorante {
 		if (insiemeB.containsKey(nome)) {
 			insiemeB.remove(nome);
 		}
-		else System.out.println("La bevanda non e' presente nell'insieme");
+		else System.out.println("La bevanda non e' (piu') presente nell'insieme");
 	}
 	public HashSet<Ricetta> getRicettario() {
 		return ricettario;

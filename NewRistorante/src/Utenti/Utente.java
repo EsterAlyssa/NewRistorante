@@ -1,5 +1,6 @@
 package Utenti;
 
+import Main.Main;
 import Ristorante.Ristorante;
 import Util.*;
 
@@ -44,17 +45,20 @@ public abstract class Utente implements MenuUtente {
 	public void setAzioni(String[] azioni) {
 		this.azioni = azioni;
 	}
-
-	public void menu(Ristorante ristorante) {
+	
+	public void menu(Ristorante ristorante, String pathCompletoFile) {
 		System.out.printf("Ciao %s!\n", this.nome);
 		int scelta = menu.scegli();
-		eseguiMetodi(ristorante, scelta);
+		eseguiMetodi(scelta, pathCompletoFile);
 	}
 
+
 	public static void mostraMenuRuoli(String pathCompletoFile) {
-		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
+		Ristorante ristorante = Main.accediRistorante(pathCompletoFile);
+		
 		Utente utente = null;
-	    Ristorante ristorante = Ristorante.getInstance(nome);
+		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
+
 		MyMenu menuRuoli = new MyMenu("Seleziona il tuo ruolo:", MENU_RUOLI);
 		int scelta = menuRuoli.scegli();
 		switch (scelta) {
@@ -72,9 +76,9 @@ public abstract class Utente implements MenuUtente {
 		}
 
 		if (utente != null) {
-			utente.menu(ristorante);
+			utente.menu(ristorante, pathCompletoFile);
 		}
 	}
 	
-	public abstract void eseguiMetodi(Ristorante ristorante, int scelta);
+	public abstract void eseguiMetodi(int scelta, String pathCompletoFile);
 }

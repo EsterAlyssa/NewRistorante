@@ -17,9 +17,9 @@ public class Main {
 		if (ServizioFile.ePrimaApertura(appDirectoryPath)) {
 			ristorante = creaRistorante();
 		} else {
-			ristorante = accediRistorante();
+			ristorante = accediRistorante(appDirectoryPath);
 		}
-		Utente.mostraMenuRuoli(appDirectoryPath);
+		Utente.mostraMenuRuoli(appDirectoryPath+ristorante.getNome()+".txt");
 
 	}
 
@@ -28,15 +28,15 @@ public class Main {
 		String nomeRistorante = InputDati.leggiStringaNonVuota(messaggioBenvenuto);
 		String percorsoCompleto = appDirectoryPath+nomeRistorante + ".txt";
 		Ristorante ristorante = Ristorante.getInstance(nomeRistorante);
-		Gestore.inizializzaRistorante(ristorante);
-		ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();
-		configurazioneManager.salvaIstanzaOggetto(ristorante, percorsoCompleto);
+		Gestore.inizializzaRistorante(percorsoCompleto);
+		ConfiguratoreManager conf = new ConfiguratoreRistorante();
+		conf.salvaIstanzaOggetto(ristorante, percorsoCompleto);
 		return ristorante;
 	}
 
-	private static Ristorante accediRistorante() {
+	public static Ristorante accediRistorante(String appDirectoryPath) {
 		Ristorante ristoranteTrovato = null;
-		String nomeRistorante = ServizioFile.getNomeFile(appDirectoryPath);
+		String nomeRistorante = ServizioFile.ricercaFile(appDirectoryPath);
 		if (nomeRistorante != null) {
 			String percorsoCompleto = appDirectoryPath+ nomeRistorante + ".txt";
 			ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();
