@@ -77,10 +77,10 @@ public class Gestore extends Utente{
 
 		String nome = InputDati.leggiStringaNonVuota(msgNome);
 		double consumoProCapite = InputDati.leggiDoubleConMinimo(msgConsumo, 0);
-
-		ristorante.aggiungiBevanda(nome, consumoProCapite);
 		
 		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
+		ristorante.aggiungiBevanda(nome, consumoProCapite);
 		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
 	}
 
@@ -91,8 +91,6 @@ public class Gestore extends Utente{
 		String msgNome = "Inserisci il nome della bevanda da rimuovere: ";
 
 		String nome = InputDati.leggiStringaNonVuota(msgNome);
-
-		ristorante.rimuoviBevanda(nome);
 		
 		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
 		String nomeDirectory = "Insiemi extra";
@@ -101,6 +99,8 @@ public class Gestore extends Utente{
 		String pathFileBevande = pathInsiemiExtra + "/" + nomeFileBevande;
 		
 		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
+		ristorante.rimuoviBevanda(nome);
 		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
 	}
 
