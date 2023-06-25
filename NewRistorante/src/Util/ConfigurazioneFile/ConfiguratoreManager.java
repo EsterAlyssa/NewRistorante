@@ -24,10 +24,7 @@ public abstract class ConfiguratoreManager {
 			String nomeOggetto = ServizioFile.getNomeFileSenzaEstensione(pathOggetto);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				Object oggetto = caricaIstanzaOggetto(nomeOggetto, line);
-				if (oggetto != null) {
-	                oggettoCaricato = oggetto;
-	            }
+				oggettoCaricato = caricaIstanzaOggetto(nomeOggetto, line);
 			}
 			reader.close();
 		} catch (IOException e) {

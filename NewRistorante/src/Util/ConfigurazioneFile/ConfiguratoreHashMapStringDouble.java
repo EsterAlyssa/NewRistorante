@@ -13,18 +13,20 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 
 	@Override
 	void scriviParametriNelFile(Object oggettoMappa, BufferedWriter writer) {
-		try {
-			HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoMappa;
-			for (String nomeProdotto : mappa.keySet()) {
-				writer.write(nomeProdotto + "=" + mappa.get(nomeProdotto));
-				writer.append(';');
-				writer.newLine();
-			}
-		} catch (IOException e) {
-			System.out.println("Impossibile salvare l'oggetto mappa");
-			e.printStackTrace();
-		}
+	    try {
+	        HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoMappa;
+	        for (String nomeProdotto : mappa.keySet()) {
+	            writer.write(nomeProdotto + "=" + mappa.get(nomeProdotto));
+	            writer.append(';');
+	            writer.newLine();
+	        }
+	        writer.flush(); // chiamata al metodo flush per scrivere i dati sul file
+	    } catch (IOException e) {
+	        System.out.println("Impossibile salvare l'oggetto mappa");
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@Override
 	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
@@ -35,6 +37,7 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 				String chiave = coppia[0].trim();
 				double valore = Double.parseDouble(coppia[1].trim());
 				((HashMap<String, Double>) oggetto).put(chiave, valore);
+				System.out.printf("Inserito:%s, %.2f", chiave,((HashMap<String, Double>) oggetto).get(chiave));
 			}
 		}
 	}
