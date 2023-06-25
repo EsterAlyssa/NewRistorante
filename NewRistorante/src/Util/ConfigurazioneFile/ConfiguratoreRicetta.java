@@ -25,10 +25,9 @@ public class ConfiguratoreRicetta extends ConfiguratoreManager {
             writer.write("ingredienti=");
             writer.newLine();
             HashMap<String, Double> ingredienti = r.getIngredienti();
-            for (String nomeIngrediente : ingredienti.keySet()) {
-                writer.write(nomeIngrediente + "=" + ingredienti.get(nomeIngrediente));
-                writer.newLine();
-            }
+            
+            ConfiguratoreHashMapStringDouble conf = new ConfiguratoreHashMapStringDouble();
+            conf.scriviParametriNelFile(ingredienti, writer);
         } catch (IOException e) {
             System.out.println("Impossibile salvare l'oggetto ricetta");
             e.printStackTrace();
@@ -49,15 +48,11 @@ public class ConfiguratoreRicetta extends ConfiguratoreManager {
             	((Ricetta) oggetto).setCaricoLavoroPorzione(Double.parseDouble(valoreAttributo));
                 break;
             case "ingredienti":
-                // Il valoreAttributo contiene gli ingredienti nel formato "nomeIngrediente=dose"
-                String[] ingredienti = valoreAttributo.split("\n");
-                HashMap<String, Double> mapIngredienti = new HashMap<>();
-                for (String ingrediente : ingredienti) {
-                    String[] parte = ingrediente.split("=");
-                    String nomeIngrediente = parte[0];
-                    double dose = Double.parseDouble(parte[1]);
-                    mapIngredienti.put(nomeIngrediente, dose);
-                }
+                // Il valoreAttributo contiene gli ingredienti nel formato "nomeIngrediente=dose", separatore ";\n"
+                ConfiguratoreHashMapStringDouble conf = new ConfiguratoreHashMapStringDouble();
+                HashMap<String, Double> mapIngredienti = (HashMap<String, Double>) conf.creaIstanzaOggetto(valoreAttributo);
+                conf.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, mapIngredienti);
+                
                 ((Ricetta) oggetto).setIngredienti(mapIngredienti);
                 break;
             default:

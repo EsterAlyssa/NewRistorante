@@ -17,9 +17,9 @@ public class ConfiguratoreListaSpesa extends ConfiguratoreManager{
 		try {
 			HashMap<String, Double> lista = ((ListaSpesa) listaSpesa).getLista();
 			writer.write("lista=");
+			writer.newLine();
 			ConfiguratoreManager conf = new ConfiguratoreHashMapStringDouble();
 			conf.scriviParametriNelFile(lista, writer);
-			writer.newLine();
 		} catch (IOException e) {
 			System.out.println("Impossibile salvare l'oggetto lista spesa");
 			e.printStackTrace();

@@ -16,7 +16,7 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 		try {
 			HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoMappa;
 			for (String nomeProdotto : mappa.keySet()) {
-				writer.write(nomeProdotto + "->" + mappa.get(nomeProdotto));
+				writer.write(nomeProdotto + "=" + mappa.get(nomeProdotto));
 				writer.append(';');
 				writer.newLine();
 			}
@@ -30,7 +30,7 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
 		String[] elementi = valoreAttributo.split(";\n");
         for (String elemento : elementi) {
-            String[] coppia = elemento.split("->");
+            String[] coppia = elemento.split("=");
             String chiave = coppia[0].trim();
             double valore = Double.parseDouble(coppia[1].trim());
             ((HashMap<String, Double>) oggetto).put(chiave, valore);

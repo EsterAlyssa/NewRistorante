@@ -40,12 +40,12 @@ public class ConfiguratoreSceltaPrenotazione extends ConfiguratoreManager {
 
 	@Override
 	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object oggetto) {
-		if (nomeAttributo.contains("Piatto")) {
-			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
-			confPiat.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, oggetto);
-		} else {
+		if (nomeAttributo.contains("MenuTematico")) {
 			ConfiguratoreManager confMenuT = new ConfiguratoreMenuTematico();
 			confMenuT.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, oggetto);
+		} else {
+			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
+			confPiat.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, oggetto);
 		}
 
 	}

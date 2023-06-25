@@ -28,11 +28,12 @@ public class ConfiguratorePrenotazione extends ConfiguratoreManager{
 			writer.newLine();
 			ConfiguratoreManager confScelta = new ConfiguratoreSceltaPrenotazione();
 			for (SceltaPrenotazione scelta : elenco.keySet()) {
-				writer.write("quantitaPrenotate->" + elenco.get(scelta));
+				writer.write("quantitaPrenotate=" + elenco.get(scelta));
 				writer.newLine();
+				writer.append('~');
 				confScelta.scriviParametriNelFile(scelta, writer);
-				writer.append(';');
 				writer.newLine();
+				writer.append("----");
 				writer.newLine();
 			}
 		} catch (IOException e) {
@@ -57,18 +58,18 @@ public class ConfiguratorePrenotazione extends ConfiguratoreManager{
 			break;
 		case "elenco":
 			HashMap<SceltaPrenotazione, Integer> elenco = new HashMap<>();
-			String[] sceltePrenotate = valoreAttributo.split(";\n\n");
+			String[] sceltePrenotate = valoreAttributo.split("\n----\n");
 			ConfiguratoreManager confScelta = new ConfiguratoreSceltaPrenotazione();
 			for (String scelta : sceltePrenotate) {
-				String[] coppia = scelta.split("=");
-				String descrizioneScelta = coppia[0].trim();
-				String quantitaScelta = coppia[1].trim();
+				String[] coppia = scelta.split("~");
+				String quantitaPrenotate = coppia[0].trim();
+				String descrizioneScelta = coppia[1].trim();
 				
-				String[] perQuantitaSelta = quantitaScelta.split("->");
+				String[] perQuantitaSelta = quantitaPrenotate.split("=");
 				int numScelta = Integer.parseInt(perQuantitaSelta[1].trim());
 				
 				SceltaPrenotazione sceltaPren = (SceltaPrenotazione) confScelta.creaIstanzaOggetto(descrizioneScelta);
-				confScelta.setAttributiDatoOggetto(nomeAttributo, valoreAttributo, sceltaPren);
+				confScelta.setAttributiDatoOggetto(scelta, descrizioneScelta, sceltaPren);
 
 				elenco.put(sceltaPren, numScelta);
 			}

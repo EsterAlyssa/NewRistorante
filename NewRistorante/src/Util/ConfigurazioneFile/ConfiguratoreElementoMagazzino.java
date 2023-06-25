@@ -17,30 +17,27 @@ public class ConfiguratoreElementoMagazzino extends ConfiguratoreManager{
 		try {
 			ElementoMagazzino elementoMagazzino = (ElementoMagazzino) oggetto;
 			Merce merce = elementoMagazzino.getMerce();
-
+			writer.write("merce=");
+			writer.newLine();
+			
 			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
 			configuratoreMerce.scriviParametriNelFile(merce, writer);
-
-			writer.write("quantita=" + elementoMagazzino.getQuantita());
+			
 			writer.newLine();
+			writer.write("quantita=" + elementoMagazzino.getQuantita());
 		} catch (IOException e) {
 			System.out.println("Impossibile salvare l'oggetto Elemento Magazzino");
 			e.printStackTrace();
 		}
 	}
 
-	public void setAttributiOggetto(String nomeOggetto, String nomeAttributo, String valoreAttributo) {
-		ElementoMagazzino elementoMagazzino = new ElementoMagazzino(null, 0.0);
-		setAttributiDatoOggetto(nomeAttributo, valoreAttributo, elementoMagazzino);
-	}
-	
 	@Override
 	public void setAttributiDatoOggetto(String nomeAttributo, String valoreAttributo, Object elementoMagazzino) {
 		switch (nomeAttributo) {
 		case "merce":
-			Merce merce = null;
 			ConfiguratoreMerce configuratoreMerce = new ConfiguratoreMerce();
-	        String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
+			Merce merce = (Merce) configuratoreMerce.creaIstanzaOggetto(nomeAttributo);
+			String nomeAttributoSenzaPrefisso = nomeAttributo.substring(nomeAttributo.indexOf("=") + 1);
 			configuratoreMerce.setAttributiDatoOggetto(nomeAttributoSenzaPrefisso, valoreAttributo, merce);
 			((ElementoMagazzino) elementoMagazzino).setMerce(merce);
 			break;

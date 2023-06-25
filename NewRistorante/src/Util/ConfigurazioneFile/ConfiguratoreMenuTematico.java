@@ -22,12 +22,16 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 			writer.write("validitaMenu=" + menu.getValidita().toString());
 			writer.newLine();
 			writer.write("caricoLavoroMenuTematico=" + menu.getCaricoLavoro());
+			writer.newLine();
 			
 			HashSet<Piatto> elenco = ((MenuTematico) menu).getElenco();
 			writer.write("elencoMenu=");
 			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
 			for (Piatto piatto : elenco) {
 				confPiat.scriviParametriNelFile(piatto, writer);
+				writer.newLine();
+				writer.append("---");
+				writer.newLine();
 			}
 			
 		} catch (IOException e) {
@@ -52,7 +56,7 @@ public class ConfiguratoreMenuTematico extends ConfiguratoreManager {
 			break;
 		case "elencoMenu":
 			HashSet<Piatto> elenco = new HashSet<>();
-			String[] piatti = valoreAttributo.split("\n");
+			String[] piatti = valoreAttributo.split("\n---\n");
 			ConfiguratoreManager confPiat = new ConfiguratorePiatto();
 			for (String piatto : piatti) {
 				int i=1;
