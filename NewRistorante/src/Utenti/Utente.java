@@ -49,7 +49,12 @@ public abstract class Utente implements MenuUtente {
 	public void menu(Ristorante ristorante, String pathCompletoFile) {
 		System.out.printf("Ciao %s!\n", this.nome);
 		int scelta = menu.scegli();
-		eseguiMetodi(scelta, pathCompletoFile);
+		try {
+			eseguiMetodi(scelta, pathCompletoFile);
+		} catch (NullPointerException e) {
+			System.out.println("Errore inizializzazione");
+			e.printStackTrace();
+		}
 	}
 
 

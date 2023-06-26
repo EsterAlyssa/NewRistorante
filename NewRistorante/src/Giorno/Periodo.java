@@ -14,6 +14,11 @@ public class Periodo {
 		this.periodoValidita = new TreeSet<>();
 	}
 
+	// crea un periodo dato un singolo giorno
+	public Periodo(Giorno giorno) {
+		this.periodoValidita = new TreeSet<>();
+		periodoValidita.add(giorno);
+	}
 	public TreeSet<Giorno> getPeriodoValidita() {
 		return periodoValidita;
 	}

@@ -502,7 +502,6 @@ public class Gestore extends Utente{
 			ServizioFile.creaFile(pathFileMenuTematico);
 		}
 
-
 		ConfiguratoreMenuTematico confMenuT = new ConfiguratoreMenuTematico();
 		//salviamo il file nella cartella contenente tutti i menu tematici
 		confMenuT.salvaIstanzaOggetto(nuovo, pathFileMenuTematico);

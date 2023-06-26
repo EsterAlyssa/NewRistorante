@@ -21,11 +21,18 @@ public class Giornata {
 	private HashSet<MenuTematico> menuTematici;
 
 	public Giornata(Giorno giorno, ListaSpesa daComprare, MenuCarta menuCarta) {
-		super();
 		this.giorno = giorno;
 		this.prenotazioni = new HashSet<>();
 		this.daComprare = daComprare;
 		this.menuCarta = menuCarta;
+		this.menuTematici =  new HashSet<>();
+	}
+
+	public Giornata(String giorno) {
+		this.giorno = Giorno.parseGiorno(giorno);
+		this.prenotazioni = new HashSet<>();
+		this.daComprare = new ListaSpesa();;
+		this.menuCarta = new MenuCarta();
 		this.menuTematici =  new HashSet<>();
 	}
 

@@ -11,6 +11,8 @@ import Magazzino.Merce.Merce;
 import Ristorante.Giornata;
 import Ristorante.Ristorante;
 import Util.InputDati;
+import Util.ServizioFile;
+import Util.ConfigurazioneFile.ConfiguratoreRistorante;
 
 public class Magazziniere extends Utente {
 
@@ -24,32 +26,46 @@ public class Magazziniere extends Utente {
 	}
 
 	@Override
-	public void eseguiMetodi(Ristorante ristorante, int scelta) {
+	public void eseguiMetodi(int scelta, String pathCompletoFileRistorante) {
+		String pathDirectory = pathCompletoFileRistorante.substring(0, pathCompletoFileRistorante.lastIndexOf("/"));
+		String nomeDirectory = "Registro Magazzino";
+		String pathRegistroMagazzino = pathDirectory + "/" + nomeDirectory;
+		// Controlla se la directory "Registro Magazzino" esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathRegistroMagazzino);
+		
 		Giorno giornoCorrente = Giorno.ritornaGiornoCorrente();
+		
 		switch(scelta) {
 		case 1: 
-			aggiuntaProdottiAcquistati(ristorante);
+			aggiuntaProdottiAcquistati(pathCompletoFileRistorante);
 			break;
 		case 2:
-			prelievoIngredientiPerCucina(giornoCorrente, ristorante);
+			prelievoIngredientiPerCucina(giornoCorrente, pathCompletoFileRistorante);
 			break;
 		case 3:
-			prelievoExtraPerTavoli(giornoCorrente, ristorante);
+			prelievoExtraPerTavoli(giornoCorrente, pathCompletoFileRistorante);
 			break;
 		case 4:
-			aggiuntaMerciInutilizzati(ristorante);
+			aggiuntaMerciInutilizzati(pathCompletoFileRistorante);
 			break;
 		case 5:
-			eliminazioneScarti(giornoCorrente, ristorante);
+			eliminazioneScarti(giornoCorrente, pathCompletoFileRistorante);
 			break;
 		case 6:
-			generaListaSpesa(giornoCorrente, ristorante);
+			generaListaSpesa(giornoCorrente, pathCompletoFileRistorante);
 			break;
 		}
 	}
 
 
-	public void aggiuntaProdottiAcquistati(Ristorante ristorante) {
+	public void aggiuntaProdottiAcquistati(String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+		
+		
+		
+
+		
 		HashSet<ElementoMagazzino> comprati = elementiMagazzinoComprati();
 		ristorante.getRegistroMagazzino().acquistatiI(comprati);
 	}
@@ -74,18 +90,30 @@ public class Magazziniere extends Utente {
 		return comprati;
 	}
 
-	public void prelievoIngredientiPerCucina(Giorno giornoCorrente, Ristorante ristorante) {
+	public void prelievoIngredientiPerCucina(Giorno giornoCorrente, String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
+		
 		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
 		ristorante.getRegistroMagazzino().inCucinaO(giornataCorrente);
 	}
 
-	public void prelievoExtraPerTavoli(Giorno giornoCorrente, Ristorante ristorante) {
+	public void prelievoExtraPerTavoli(Giorno giornoCorrente, String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
+		
 		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
 		ristorante.getRegistroMagazzino().extraO(ristorante, giornataCorrente);
 
 	}
 
-	public void aggiuntaMerciInutilizzati(Ristorante ristorante) {
+	public void aggiuntaMerciInutilizzati(String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
+		
 		HashMap<Merce, Double> avanzi = new HashMap<>();
 		
 		String messaggioQuantita = "Inserisci quante merci hanno queste caratteristiche: ";
@@ -136,7 +164,11 @@ public class Magazziniere extends Utente {
 		return Merce.creaMerceDaTipo(nomeMerce, tipo, unitaMisura, scadenza, consumoProCapite);
 	}
 	
-	public void eliminazioneScarti(Giorno giornoCorrente, Ristorante ristorante) {
+	public void eliminazioneScarti(Giorno giornoCorrente, String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
+		
 		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
 		Merce merceNonDiQualita = dichiarazioneMerceDeteriorata();
 		ristorante.getRegistroMagazzino().setFalseQualitaMerce(merceNonDiQualita);
@@ -150,7 +182,11 @@ public class Magazziniere extends Utente {
 		return creaMerce();
 	}
 	
-	public void generaListaSpesa(Giorno giornoCorrente, Ristorante ristorante) {
+	public void generaListaSpesa(Giorno giornoCorrente, String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
+		
 		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
 		RegistroMagazzino registroMagazzino = ristorante.getRegistroMagazzino();
 		giornataCorrente.creaListaSpesa(ristorante);

@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public abstract class ConfiguratoreManager {
-
-	private ArrayList<Object> oggettoCaricato;
 	
 	public void salvaIstanzaOggetto(Object oggetto, String pathRistorante) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathRistorante))) {
@@ -21,13 +19,13 @@ public abstract class ConfiguratoreManager {
 	abstract void scriviParametriNelFile(Object oggetto, BufferedWriter writer);
 
 	public Object caricaIstanzaOggettoDaFile(String pathOggetto) {
-		oggettoCaricato = null;
+		Object oggettoCaricato = null;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(pathOggetto));
 			String nomeOggetto = ServizioFile.getNomeFileSenzaEstensione(pathOggetto);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				oggettoCaricato.add(caricaIstanzaOggetto(nomeOggetto, line));
+				oggettoCaricato = caricaIstanzaOggetto(nomeOggetto, line);
 			}
 			reader.close();
 		} catch (IOException e) {

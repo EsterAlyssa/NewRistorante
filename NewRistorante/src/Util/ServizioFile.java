@@ -137,5 +137,22 @@ public class ServizioFile
 
 		return fileTxtList;
 	}
+	
+	public static List<File> getElencoDirectory(String directoryPath) {
+		List<File> fileDirectoryList = new ArrayList<>();
+
+		File directory = new File(directoryPath);
+		if (directory.exists() && directory.isDirectory()) {
+			File[] files = directory.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isDirectory()) {
+						fileDirectoryList.add(file);
+					}
+				}
+			}
+		}
+		return fileDirectoryList;
+	}
 }
 
