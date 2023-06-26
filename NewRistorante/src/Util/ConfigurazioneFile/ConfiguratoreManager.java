@@ -3,9 +3,12 @@ package Util.ConfigurazioneFile;
 import Util.ServizioFile;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public abstract class ConfiguratoreManager {
 
+	private ArrayList<Object> oggettoCaricato;
+	
 	public void salvaIstanzaOggetto(Object oggetto, String pathRistorante) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathRistorante))) {
 			// Scrittura dei parametri nel file
@@ -18,13 +21,13 @@ public abstract class ConfiguratoreManager {
 	abstract void scriviParametriNelFile(Object oggetto, BufferedWriter writer);
 
 	public Object caricaIstanzaOggettoDaFile(String pathOggetto) {
-		Object oggettoCaricato = null;
+		oggettoCaricato = null;
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(pathOggetto));
 			String nomeOggetto = ServizioFile.getNomeFileSenzaEstensione(pathOggetto);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				oggettoCaricato = caricaIstanzaOggetto(nomeOggetto, line);
+				oggettoCaricato.add(caricaIstanzaOggetto(nomeOggetto, line));
 			}
 			reader.close();
 		} catch (IOException e) {

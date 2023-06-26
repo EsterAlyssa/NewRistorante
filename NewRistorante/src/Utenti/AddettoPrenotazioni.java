@@ -5,6 +5,7 @@ import Prenotazioni.SceltaPrenotazione;
 import Ristorante.Giornata;
 import Ristorante.Ristorante;
 import Util.InputDati;
+import Util.ConfigurazioneFile.ConfiguratoreRistorante;
 
 import java.util.TreeSet;
 import java.util.HashSet;
@@ -21,13 +22,16 @@ public class AddettoPrenotazioni extends Utente {
 		super(nome, etichettaAP, voci);
 	}
 
-	public void accettazionePrenotazione(Ristorante ristorante) {
+	public void accettazionePrenotazione(String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
 		String messaggioSuccessoAccettazione = "La prenotazione è avvenuta con successo";
 		String messaggioErrAccettazione = "La prenotazione non si può accettare";
 
 		Prenotazione prenotazione = Prenotazione.creaPrenotazioneVuota(ristorante.getNumPosti());
 
-		aggiungiScelte(ristorante, prenotazione);
+		aggiungiScelte(pathCompletoFileRistorante, prenotazione);
 
 		Giorno dataPrenotazione = prenotazione.getData();
 		TreeSet<Giornata> calendario = ristorante.getCalendario();
@@ -47,7 +51,10 @@ public class AddettoPrenotazioni extends Utente {
 		}
 	}
 
-	public void aggiungiScelte(Ristorante ristorante, Prenotazione prenotazione) {
+	public void aggiungiScelte(String pathCompletoFileRistorante, Prenotazione prenotazione) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
 		String messaggioNomeScelta = "Inserire il nome del menu tematico o del piatto scelto: ";
 		String messaggioNumScelta = "Inserire per quante persone vale la scelta: ";
 		String messaggioRichiestaAltreScelte = "Vuoi inserire altri elementi in questa prenotazione?";
@@ -98,7 +105,10 @@ public class AddettoPrenotazioni extends Utente {
 			return false;
 	}
 
-	public void visualizzaPrenotazioni(Ristorante ristorante) {
+	public void visualizzaPrenotazioni(String pathCompletoFileRistorante) {
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+
 		String messaggioGiornata = "Inserire la giornata di cui si vuole vedere le prenotazioni";
 
 		System.out.println(messaggioGiornata);
@@ -112,13 +122,13 @@ public class AddettoPrenotazioni extends Utente {
 	}
 
 	@Override
-	public void eseguiMetodi(Ristorante ristorante, int scelta) {
+	public void eseguiMetodi(int scelta, String pathCompletoFileRistorante) {
 		switch (scelta) {
 		case 1: 
-			accettazionePrenotazione(ristorante);
+			accettazionePrenotazione(pathCompletoFileRistorante);
 			break;
 		case 2:
-			visualizzaPrenotazioni(ristorante);
+			visualizzaPrenotazioni(pathCompletoFileRistorante);
 			break;
 		}
 	}
