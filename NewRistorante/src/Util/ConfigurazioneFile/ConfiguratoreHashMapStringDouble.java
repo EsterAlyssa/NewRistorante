@@ -16,16 +16,16 @@ public class ConfiguratoreHashMapStringDouble extends ConfiguratoreManager {
 	    try {
 	        HashMap<String, Double> mappa = (HashMap<String, Double>) oggettoMappa;
 	        for (String nomeProdotto : mappa.keySet()) {
-	            writer.write(nomeProdotto + "=" + mappa.get(nomeProdotto));
-	            writer.append(';');
-	            writer.newLine();
+	            writer.write(nomeProdotto + "=" + mappa.get(nomeProdotto) + ";");
+		        writer.newLine();
+		        writer.flush();
 	        }
-	        writer.flush(); // chiamata al metodo flush per scrivere i dati sul file
 	    } catch (IOException e) {
 	        System.out.println("Impossibile salvare l'oggetto mappa");
 	        e.printStackTrace();
 	    }
 	}
+
 
 
 	@Override

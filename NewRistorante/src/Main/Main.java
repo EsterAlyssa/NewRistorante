@@ -36,7 +36,7 @@ public class Main {
 
 	public static Ristorante accediRistorante(String appDirectoryPath) {
 		Ristorante ristoranteTrovato = null;
-		String nomeRistorante = ServizioFile.ricercaFile(appDirectoryPath);
+		String nomeRistorante = ServizioFile.trovaPrimoFileTxt(appDirectoryPath);
 		if (nomeRistorante != null) {
 			String percorsoCompleto = appDirectoryPath+ nomeRistorante + ".txt";
 			ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();

@@ -1,7 +1,9 @@
 package Utenti;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import Giorno.Periodo;
 import Ristorante.Ristorante;
@@ -79,35 +81,33 @@ public class Gestore extends Utente{
 		double consumoProCapite = InputDati.leggiDoubleConMinimo(msgConsumo, 0);
 
 		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
-		HashMap<String, Double> insiemeBevande = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande);
-	    if (insiemeBevande == null) {
-	        insiemeBevande = new HashMap<>();
-	    }
-	    
+		HashMap<String, Double> insiemeB = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande);
+		ristorante.setInsiemeB(insiemeB);
 		ristorante.aggiungiBevanda(nome, consumoProCapite);
-		insiemeBevande.putAll(ristorante.getInsiemeB());
-		
-		confIns.salvaIstanzaOggetto(insiemeBevande, pathFileBevande);
+		insiemeB = ristorante.getInsiemeB();
+		confIns.salvaIstanzaOggetto(insiemeB, pathFileBevande);
 	}
 
-	public void rimuoviBevanda(String pathCompletoFile) {
+	public void rimuoviBevanda(String pathCompletoFileRistorante) {
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
-		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFile);
+		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
 
 		String msgNome = "Inserisci il nome della bevanda da rimuovere: ";
 
 		String nome = InputDati.leggiStringaNonVuota(msgNome);
 
-		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String pathDirectory = pathCompletoFileRistorante.substring(0, pathCompletoFileRistorante.lastIndexOf("/"));
 		String nomeDirectory = "Insiemi extra";
 		String pathInsiemiExtra = pathDirectory + "/" + nomeDirectory;
 		String nomeFileBevande = "insieme bevande.txt";
 		String pathFileBevande = pathInsiemiExtra + "/" + nomeFileBevande;
 
 		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
-		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
+		HashMap<String, Double> insiemeB = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande);
+		ristorante.setInsiemeB(insiemeB);
 		ristorante.rimuoviBevanda(nome);
-		confIns.salvaIstanzaOggetto(ristorante.getInsiemeB(), pathFileBevande);
+		insiemeB = ristorante.getInsiemeB();
+		confIns.salvaIstanzaOggetto(insiemeB, pathFileBevande);
 	}
 
 	public void visualizzaInsiemeBevande(String pathCompletoFile) {
@@ -122,7 +122,8 @@ public class Gestore extends Utente{
 
 		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
 		HashMap<String, Double> insiemeB = ((HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande));
-
+		ristorante.setInsiemeB(insiemeB);
+		
 		for (String elemento : insiemeB.keySet()) {
 			System.out.printf("bevanda: %s\tconsumo pro capite: %f.2\n", elemento, insiemeB.get(elemento));
 		}
@@ -138,23 +139,59 @@ public class Gestore extends Utente{
 		String nome = InputDati.leggiStringaNonVuota(msgNome);
 		double consumoProCapite = InputDati.leggiDoubleConMinimo(msgConsumo, 0);
 
+		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String nomeDirectory = "Insiemi extra";
+		String pathInsiemiExtra = pathDirectory + "/" + nomeDirectory;
+		String nomeFileGeneriExtra = "insieme generi extra.txt";
+		String pathFileGeneriExtra = pathInsiemiExtra + "/" + nomeFileGeneriExtra;
+
+		// Controlla se il file "insieme_generi extra.txt" esiste, altrimenti lo crea
+		if (!ServizioFile.controlloEsistenzaFile(pathFileGeneriExtra)) {
+			ServizioFile.creaFile(pathFileGeneriExtra);
+		}
+		
+		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		HashMap<String, Double> insiemeGE = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileGeneriExtra);
+		ristorante.setInsiemeGE(insiemeGE);
 		ristorante.aggiungiGenereExtra(nome, consumoProCapite);
+		insiemeGE = ristorante.getInsiemeGE();
+		confIns.salvaIstanzaOggetto(insiemeGE, pathFileGeneriExtra);
 	}
 
 	public void rimuoviGenereExtra(String pathCompletoFile) {
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFile);
 
+		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String nomeDirectory = "Insiemi extra";
+		String pathInsiemiExtra = pathDirectory + "/" + nomeDirectory;
+		String nomeFileGeneriExtra = "insieme generi extra.txt";
+		String pathFileGeneriExtra = pathInsiemiExtra + "/" + nomeFileGeneriExtra;
+		
 		String msgNome = "Inserisci il nome del genere extra da rimuovere: ";
-
 		String nome = InputDati.leggiStringaNonVuota(msgNome);
 
+		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		HashMap<String, Double> insiemeGE = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileGeneriExtra);
+		ristorante.setInsiemeGE(insiemeGE);
 		ristorante.rimuoviGenereExtra(nome);
+		insiemeGE = ristorante.getInsiemeGE();
+		confIns.salvaIstanzaOggetto(insiemeGE, pathFileGeneriExtra);
 	}
 
 	public void visualizzaInsiemeGeneriExtra(String pathCompletoFile) {
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFile);
+
+		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String nomeDirectory = "Insiemi extra";
+		String pathInsiemiExtra = pathDirectory + "/" + nomeDirectory;
+		String nomeFileGeneriExtra = "insieme generi extra.txt";
+		String pathFileGeneriExtra = pathInsiemiExtra + "/" + nomeFileGeneriExtra;
+		
+		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		HashMap<String, Double> insiemeGE = (HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileGeneriExtra);
+		ristorante.setInsiemeGE(insiemeGE);
 
 		for (String elemento : ristorante.getInsiemeGE().keySet()) {
 			System.out.printf("genere extra: %s\tconsumo pro capite: %f.2\n", elemento, ristorante.getInsiemeGE().get(elemento));
@@ -165,17 +202,27 @@ public class Gestore extends Utente{
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFile);
 
-		String msgValidita = "Vuoi gia' inserire il periodo di validita' per ogni piatto? [S/N] ";
+		String msgValidita = "Vuoi gia' inserire il periodo di validita' per ogni piatto? ";
 
+		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String nomeDirectory = "Piatti";
+		String pathPiatti = pathDirectory + "/" + nomeDirectory;
+		
+		ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
+		
 		for (Ricetta ricetta : ristorante.getRicettario()) {
+			String nomeFilePiatto = ricetta.getNome()+".txt";
+			String pathFilePiatto = pathPiatti + "/" + nomeFilePiatto;
+			
 			Piatto piatto = new Piatto (ricetta.getNome(), ricetta.getCaricoLavoroPorzione());
-
+			
 			boolean scelta = InputDati.yesOrNo(msgValidita);
 			if (scelta) {
 				aggiungiValiditaPiatto(piatto);
 			}
-
-			ristorante.aggiungiPiatto(piatto);;
+			
+			confPiat.salvaIstanzaOggetto(piatto, pathFilePiatto);
+			ristorante.aggiungiPiatto(piatto);
 		}
 	}
 
@@ -189,11 +236,26 @@ public class Gestore extends Utente{
 	}
 
 	public void aggiungiValiditaPiatti (String pathCompletoFile) {
+		// da pathCompletoFile ricavare ristorante e quindi l'hashet<Piatto>
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFile);
-		HashSet<Piatto> piatti = ristorante.getPiatti();
-		// da pathCompletoFile ricavare ristorante e quindi l'hashet<Piatto>
+		
+		String pathDirectory = pathCompletoFile.substring(0, pathCompletoFile.lastIndexOf("/"));
+		String nomeDirectory = "Piatti";
+		String pathPiatti = pathDirectory + "/" + nomeDirectory;
+		
+		ConfiguratorePiatto confPiat = new ConfiguratorePiatto();
+		HashSet<Piatto> piatti = new HashSet<>(ServizioFile.contaFileTxt(nomeDirectory));
+
+		List<File> fileTxtList = ServizioFile.getElencoFileTxt(pathPiatti);
+	    for (File file : fileTxtList) {
+	        Piatto piatto = (Piatto) confPiat.caricaIstanzaOggettoDaFile(file.getAbsolutePath());
+	        piatti.add(piatto);
+	    }
+		ristorante.setPiatti(piatti);
+		
 		for (Piatto piatto : piatti) {	
+			/ *mostra nome: ha già/ non ha già validità. vuoi inserire la validità di questo piatto? se sì okay, altrimenti prossimo piatto
 			aggiungiValiditaPiatto(piatto);
 		}
 	}

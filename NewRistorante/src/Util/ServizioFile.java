@@ -1,5 +1,7 @@
 package Util;
 import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class ServizioFile
@@ -60,43 +62,80 @@ public class ServizioFile
 		}
 		return null; // Restituisci null se non è stato possibile trovare il file
 	}
-	
-	
+
+
 	public static boolean creaDirectory(String nomeDirectory) {
-	    File directory = new File(nomeDirectory);
+		File directory = new File(nomeDirectory);
 
-	    if (directory.exists()) {
-	        System.out.println("La directory " + nomeDirectory + " esiste già.");
-	        return false; // Restituisci false se la directory esiste già
-	    }
+		if (directory.exists()) {
+			System.out.println("La directory " + nomeDirectory + " esiste già.");
+			return false; // Restituisci false se la directory esiste già
+		}
 
-	    if (directory.mkdir()) {
-	        System.out.println("La directory " + nomeDirectory + " è stata creata con successo.");
-	        return true; // Restituisci true se la directory è stata creata
-	    } else {
-	        System.out.println("Impossibile creare la directory " + nomeDirectory + ".");
-	        return false; // Restituisci false se la directory non può essere creata
-	    }
+		if (directory.mkdir()) {
+			System.out.println("La directory " + nomeDirectory + " è stata creata con successo.");
+			return true; // Restituisci true se la directory è stata creata
+		} else {
+			System.out.println("Impossibile creare la directory " + nomeDirectory + ".");
+			return false; // Restituisci false se la directory non può essere creata
+		}
 	}
 
 	public static boolean controlloEsistenzaFile(String percorsoFile) {
-	    File file = new File(percorsoFile);
-	    return file.exists();
+		File file = new File(percorsoFile);
+		return file.exists();
 	}
-	
-	public static String ricercaFile(String directoryPath) {
-        File directory = new File(directoryPath);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().endsWith(".txt")) {
-                        return getNomeFileSenzaEstensione(file.getName());
-                    }
-                }
-            }
-        }
-        return null; // Restituisci null se non è stato possibile trovare il file
-    }
+
+	public static String trovaPrimoFileTxt(String directoryPath) {
+		File directory = new File(directoryPath);
+		if (directory.exists() && directory.isDirectory()) {
+			File[] files = directory.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile() && file.getName().endsWith(".txt")) {
+						return getNomeFileSenzaEstensione(file.getName());
+					}
+				}
+			}
+		}
+		return null; // Restituisci null se non è stato possibile trovare il file
+	}
+
+	//da' il numero di file .txt all'interno di una cartella
+	public static int contaFileTxt(String directoryPath) {
+		File directory = new File(directoryPath);
+		int count = 0;
+
+		if (directory.exists() && directory.isDirectory()) {
+			File[] files = directory.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile() && file.getName().endsWith(".txt")) {
+						count++;
+					}
+				}
+			}
+		}
+
+		return count;
+	}
+
+	public static List<File> getElencoFileTxt(String directoryPath) {
+		List<File> fileTxtList = new ArrayList<>();
+
+		File directory = new File(directoryPath);
+		if (directory.exists() && directory.isDirectory()) {
+			File[] files = directory.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					if (file.isFile() && file.getName().endsWith(".txt")) {
+						fileTxtList.add(file);
+					}
+				}
+			}
+		}
+
+		return fileTxtList;
+	}
 }
 
