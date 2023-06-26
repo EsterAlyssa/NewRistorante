@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 import Giorno.Giorno;
 import Giorno.Periodo;
@@ -18,6 +17,7 @@ import Ristorante.Ristorante;
 import Ristorante.ElementiRistorante.MenuCarta;
 import Ristorante.ElementiRistorante.MenuTematico;
 import Ristorante.ElementiRistorante.Piatto;
+import Ristorante.ElementiRistorante.Ricetta;
 import Util.InputDati;
 import Util.ServizioFile;
 import Util.ConfigurazioneFile.ConfiguratoreRistorante;
@@ -25,6 +25,8 @@ import Util.ConfigurazioneFile.ConfiguratoreMenuCarta;
 import Util.ConfigurazioneFile.ConfiguratoreMenuTematico;
 import Util.ConfigurazioneFile.ConfiguratorePrenotazione;
 import Util.ConfigurazioneFile.ConfiguratoreRegistroMagazzino;
+import Util.ConfigurazioneFile.ConfiguratoreRicetta;
+import Util.ConfigurazioneFile.ConfiguratoreExtra;
 import Util.ConfigurazioneFile.ConfiguratoreListaSpesa;
 
 public class Magazziniere extends Utente {
@@ -142,7 +144,7 @@ public class Magazziniere extends Utente {
 		String nomeFileListaSpesa = "lista della spesa.txt";
 		String pathFileListaSpesa = pathDirectoryDaComprare + "/" + nomeFileListaSpesa;
 
-		// Controlla se il file "insieme_bevande.txt" esiste, altrimenti lo crea
+		// Controlla se il file esiste, altrimenti lo crea
 		if (!ServizioFile.controlloEsistenzaFile(pathFileListaSpesa)) {
 			ServizioFile.creaFile(pathFileListaSpesa);
 		}
@@ -167,7 +169,7 @@ public class Magazziniere extends Utente {
 					prenotazioni.add(pren);
 				}
 				giornataCorrente.setPrenotazioni(prenotazioni); 
-				
+
 				break;
 			case "Menu alla carta":
 				ConfiguratoreMenuCarta confMC = new ConfiguratoreMenuCarta();
@@ -196,7 +198,7 @@ public class Magazziniere extends Utente {
 				File fileLS = (File) ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella);
 				ListaSpesa listaS = (ListaSpesa) confLS.caricaIstanzaOggettoDaFile(fileLS.getAbsolutePath());
 				listaSpesa = listaS;
-				
+
 				giornataCorrente.setDaComprare(listaSpesa);
 			}
 		} //fine inizializzazione Giornata da file
@@ -205,7 +207,7 @@ public class Magazziniere extends Utente {
 		RegistroMagazzino registro = (RegistroMagazzino) confRegMag.caricaIstanzaOggettoDaFile(pathFileRegistroMagazzino);
 
 		ristorante.getRegistroMagazzino().inCucinaO(giornataCorrente);
-		
+
 		ristorante.setRegistroMagazzino(registro);
 
 		confRegMag.salvaIstanzaOggetto(registro, pathFileRegistroMagazzino);
@@ -217,16 +219,67 @@ public class Magazziniere extends Utente {
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
 
+		String pathDirectory = pathCompletoFileRistorante.substring(0, pathCompletoFileRistorante.lastIndexOf("/"));
+		String nomeDirectory = "Calendario";
+		String pathDirectoryCalendario = pathDirectory + "/" + nomeDirectory;
 
-		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
-		ristorante.getRegistroMagazzino().extraO(ristorante, giornataCorrente);
+		// Controlla se la directory esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathDirectoryCalendario);
 
+		String nomeDirectoryGiornata = giornoCorrente.toString();
+		String pathDirectoryGiornata = pathDirectoryCalendario + "/" + nomeDirectoryGiornata;
+
+		// Controlla se la directory esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathDirectoryGiornata);
+
+		//Giornata corrente con inizializzato solo il giorno
+		Giornata giornataCorrente = new Giornata(giornoCorrente.toString());
+
+		HashSet<Prenotazione> prenotazioni = new HashSet<>();
+
+		//inizializzazione giornata da file
+		List<File> elencoDir1Giornata = ServizioFile.getElencoDirectory(pathDirectoryGiornata);
+		for (File f : elencoDir1Giornata) {
+			String nomeCartella = f.getName();
+			switch (nomeCartella) {
+			case "Prenotazioni":
+				ConfiguratorePrenotazione confPren = new ConfiguratorePrenotazione();
+				for (File filePren : ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella)) {
+					Prenotazione pren = (Prenotazione) confPren.caricaIstanzaOggettoDaFile(filePren.getAbsolutePath());
+					prenotazioni.add(pren);
+				}
+				giornataCorrente.setPrenotazioni(prenotazioni); 
+
+				break;
+			}
+		} //fine inizializzazione Giornata (solo prenotazioni) da file
+
+		String nomeDirectoryInsiemiExtra = "Insiemi extra";
+		String pathDirectoryInsiemiExtra = pathDirectory + "/" + nomeDirectoryInsiemiExtra;
+		String nomeFileBevande = "insieme bevande.txt";
+		String pathFileBevande = pathDirectoryInsiemiExtra + "/" + nomeFileBevande;
+		String nomeFileGeneriExtra = "insieme generi extra.txt";
+		String pathFileGeneriExtra = pathDirectoryInsiemiExtra + "/" + nomeFileGeneriExtra;
+
+		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		HashMap<String, Double> insiemeB = ((HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande));
+		ristorante.setInsiemeB(insiemeB);
+
+		HashMap<String, Double> insiemeGE = ((HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileGeneriExtra));
+		ristorante.setInsiemeGE(insiemeGE);
+
+		ConfiguratoreRegistroMagazzino confRegMag = new ConfiguratoreRegistroMagazzino();
+		RegistroMagazzino registro = (RegistroMagazzino) confRegMag.caricaIstanzaOggettoDaFile(pathFileRegistroMagazzino);
+
+		registro.extraO(ristorante, giornataCorrente);
+
+		ristorante.setRegistroMagazzino(registro);
+		confRegMag.salvaIstanzaOggetto(registro, pathFileRegistroMagazzino);
 	}
 
 	public void aggiuntaMerciInutilizzati(String pathCompletoFileRistorante, String pathFileRegistroMagazzino) {
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
-
 
 		HashMap<Merce, Double> avanzi = new HashMap<>();
 
@@ -243,7 +296,12 @@ public class Magazziniere extends Utente {
 			scelta = InputDati.yesOrNo(messaggioAltreMerci);
 		} while (scelta);
 
-		ristorante.getRegistroMagazzino().avanziI(avanzi);
+		ConfiguratoreRegistroMagazzino confRegMag = new ConfiguratoreRegistroMagazzino();
+		RegistroMagazzino registro = (RegistroMagazzino) confRegMag.caricaIstanzaOggettoDaFile(pathFileRegistroMagazzino);
+
+		registro.avanziI(avanzi);
+		ristorante.setRegistroMagazzino(registro);
+		confRegMag.salvaIstanzaOggetto(registro, pathFileRegistroMagazzino);
 	}
 
 	private Merce creaMerce() {
@@ -280,14 +338,21 @@ public class Magazziniere extends Utente {
 
 	public void eliminazioneScarti(Giorno giornoCorrente, String pathCompletoFileRistorante, 
 			String pathFileRegistroMagazzino) {
+		
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
 
-
-		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
+		Giornata giornataCorrente = new Giornata(giornoCorrente.toString());
+		
 		Merce merceNonDiQualita = dichiarazioneMerceDeteriorata();
-		ristorante.getRegistroMagazzino().setFalseQualitaMerce(merceNonDiQualita);
-		ristorante.getRegistroMagazzino().scartiO(giornataCorrente);
+		
+		ConfiguratoreRegistroMagazzino confRegMag = new ConfiguratoreRegistroMagazzino();
+		RegistroMagazzino registro = (RegistroMagazzino) confRegMag.caricaIstanzaOggettoDaFile(pathFileRegistroMagazzino);
+		
+		registro.setFalseQualitaMerce(merceNonDiQualita);
+		registro.scartiO(giornataCorrente);
+		ristorante.setRegistroMagazzino(registro);
+		confRegMag.salvaIstanzaOggetto(registro, pathFileRegistroMagazzino);
 	}
 
 	private Merce dichiarazioneMerceDeteriorata() {
@@ -299,13 +364,122 @@ public class Magazziniere extends Utente {
 
 	public void generaListaSpesa(Giorno giornoCorrente, String pathCompletoFileRistorante,
 			String pathFileRegistroMagazzino) {
+		
 		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
 		Ristorante ristorante = (Ristorante) conf.caricaIstanzaOggettoDaFile(pathCompletoFileRistorante);
+		
+		ConfiguratoreRegistroMagazzino confRegMag = new ConfiguratoreRegistroMagazzino();
+		RegistroMagazzino registroMagazzino = (RegistroMagazzino) confRegMag.caricaIstanzaOggettoDaFile(pathFileRegistroMagazzino);
 
+		String pathDirectory = pathCompletoFileRistorante.substring(0, pathCompletoFileRistorante.lastIndexOf("/"));
+		String nomeDirectory = "Calendario";
+		String pathDirectoryCalendario = pathDirectory + "/" + nomeDirectory;
 
-		Giornata giornataCorrente = ristorante.getGiornata(giornoCorrente);
-		RegistroMagazzino registroMagazzino = ristorante.getRegistroMagazzino();
+		// Controlla se la directory esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathDirectoryCalendario);
+
+		String nomeDirectoryGiornata = giornoCorrente.toString();
+		String pathDirectoryGiornata = pathDirectoryCalendario + "/" + nomeDirectoryGiornata;
+
+		// Controlla se la directory esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathDirectoryGiornata);
+
+		String nomeDirectoryDaComprare = "Da comprare";
+		String pathDirectoryDaComprare = pathDirectoryGiornata + "/" + nomeDirectoryDaComprare;
+
+		// Controlla se la directory esiste, altrimenti la crea
+		ServizioFile.creaDirectory(pathDirectoryDaComprare);
+
+		String nomeFileListaSpesa = "lista della spesa.txt";
+		String pathFileListaSpesa = pathDirectoryDaComprare + "/" + nomeFileListaSpesa;
+
+		// Controlla se il file esiste, altrimenti lo crea
+		if (!ServizioFile.controlloEsistenzaFile(pathFileListaSpesa)) {
+			ServizioFile.creaFile(pathFileListaSpesa);
+		}
+
+		//Giornata corrente con inizializzato solo il giorno
+		Giornata giornataCorrente = new Giornata(giornoCorrente.toString());
+
+		HashSet<Prenotazione> prenotazioni = new HashSet<>();
+		HashSet<Piatto> menuCarta = new HashSet<>();
+		HashSet<MenuTematico> menuTematici = new HashSet<>();
+		ListaSpesa listaSpesa = new ListaSpesa();
+
+		//inizializzazione giornata da file
+		List<File> elencoDir1Giornata = ServizioFile.getElencoDirectory(pathDirectoryGiornata);
+		for (File f : elencoDir1Giornata) {
+			String nomeCartella = f.getName();
+			switch (nomeCartella) {
+			case "Prenotazioni":
+				ConfiguratorePrenotazione confPren = new ConfiguratorePrenotazione();
+				for (File filePren : ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella)) {
+					Prenotazione pren = (Prenotazione) confPren.caricaIstanzaOggettoDaFile(filePren.getAbsolutePath());
+					prenotazioni.add(pren);
+				}
+				giornataCorrente.setPrenotazioni(prenotazioni); 
+
+				break;
+			case "Menu alla carta":
+				ConfiguratoreMenuCarta confMC = new ConfiguratoreMenuCarta();
+				for (File fileMC : ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella)) {
+					Piatto piatto = (Piatto) confMC.caricaIstanzaOggettoDaFile(fileMC.getAbsolutePath());
+					menuCarta.add(piatto);
+				}
+
+				Periodo periodoMenuCarta = new Periodo(Giorno.parseGiorno(nomeCartella));
+				MenuCarta menu = new MenuCarta(periodoMenuCarta);
+				menu.setElenco(menuCarta);
+
+				giornataCorrente.setMenuCarta(menu); 
+				break;
+			case "Menu Tematici":
+				ConfiguratoreMenuTematico confMT = new ConfiguratoreMenuTematico();
+				for (File fileMT : ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella)) {
+					MenuTematico menuT = (MenuTematico) confMT.caricaIstanzaOggettoDaFile(fileMT.getAbsolutePath());
+					menuTematici.add(menuT);
+				}
+
+				giornataCorrente.setMenuTematici(menuTematici); 
+				break;
+			case "Da comprare":
+				ConfiguratoreListaSpesa confLS = new ConfiguratoreListaSpesa();
+				File fileLS = (File) ServizioFile.getElencoFileTxt(f.getAbsolutePath()+"/"+nomeCartella);
+				ListaSpesa listaS = (ListaSpesa) confLS.caricaIstanzaOggettoDaFile(fileLS.getAbsolutePath());
+				listaSpesa = listaS;
+
+				giornataCorrente.setDaComprare(listaSpesa);
+			}
+		} //fine inizializzazione Giornata da file
+
+		//settaggio insiemi bevande, generi extra, ricettario di ristorante
+		String nomeDirectoryInsiemiExtra = "Insiemi extra";
+		String pathDirectoryInsiemiExtra = pathDirectory + "/" + nomeDirectoryInsiemiExtra;
+		String nomeFileBevande = "insieme bevande.txt";
+		String pathFileBevande = pathDirectoryInsiemiExtra + "/" + nomeFileBevande;
+		String nomeFileGeneriExtra = "insieme generi extra.txt";
+		String pathFileGeneriExtra = pathDirectoryInsiemiExtra + "/" + nomeFileGeneriExtra;
+
+		ConfiguratoreExtra confIns = new ConfiguratoreExtra();
+		HashMap<String, Double> insiemeB = ((HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileBevande));
+		ristorante.setInsiemeB(insiemeB);
+
+		HashMap<String, Double> insiemeGE = ((HashMap<String, Double>) confIns.caricaIstanzaOggettoDaFile(pathFileGeneriExtra));
+		ristorante.setInsiemeGE(insiemeGE);
+		
+		String nomeDirectoryRicettario = "Ricettario";
+		String pathRicettario = pathDirectory + "/" + nomeDirectoryRicettario;
+
+		ConfiguratoreRicetta confRic = new ConfiguratoreRicetta();
+
+		List<File> elencoRicette = ServizioFile.getElencoFileTxt(pathRicettario);
+		for (File file : elencoRicette) {
+			Ricetta ricetta = (Ricetta) confRic.caricaIstanzaOggettoDaFile(file.getAbsolutePath());
+			ristorante.aggiungiRicetta(ricetta);
+		}
+		
 		giornataCorrente.creaListaSpesa(ristorante);
+		
 		ListaSpesa lista = giornataCorrente.getDaComprare(); 
 		for (String nome : lista.getLista().keySet()) {
 			if (registroMagazzino.getRegistro().containsKey(nome)) {
