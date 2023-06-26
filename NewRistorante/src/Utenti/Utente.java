@@ -1,7 +1,5 @@
 package Utenti;
 
-import Main.Main;
-import Ristorante.Ristorante;
 import Util.*;
 
 public abstract class Utente implements MenuUtente {
@@ -46,21 +44,14 @@ public abstract class Utente implements MenuUtente {
 		this.azioni = azioni;
 	}
 	
-	public void menu(Ristorante ristorante, String pathCompletoFile) {
+	public void menu(String pathCompletoFile) {
 		System.out.printf("Ciao %s!\n", this.nome);
 		int scelta = menu.scegli();
-		try {
-			eseguiMetodi(scelta, pathCompletoFile);
-		} catch (NullPointerException e) {
-			System.out.println("Errore inizializzazione");
-			e.printStackTrace();
-		}
+		eseguiMetodi(scelta, pathCompletoFile);
 	}
 
 
-	public static void mostraMenuRuoli(String pathCompletoFile) {
-		Ristorante ristorante = Main.accediRistorante(pathCompletoFile);
-		
+	public static void mostraMenuRuoli(String pathCompletoFile) {	
 		Utente utente = null;
 		String nome = InputDati.leggiStringaNonVuota("Inserisci il tuo nome: ");
 
@@ -81,7 +72,7 @@ public abstract class Utente implements MenuUtente {
 		}
 
 		if (utente != null) {
-			utente.menu(ristorante, pathCompletoFile);
+			utente.menu(pathCompletoFile);
 		}
 	}
 	

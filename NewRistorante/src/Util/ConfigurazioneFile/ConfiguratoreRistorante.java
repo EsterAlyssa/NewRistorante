@@ -55,7 +55,4 @@ public class ConfiguratoreRistorante extends ConfiguratoreManager {
 		return Ristorante.getInstance(nomeOggetto);
 	}
 
-
-	
-
 }

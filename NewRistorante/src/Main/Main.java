@@ -5,7 +5,6 @@ import Utenti.Gestore;
 import Utenti.Utente;
 import Util.InputDati;
 import Util.ServizioFile;
-import Util.ConfigurazioneFile.ConfiguratoreManager;
 import Util.ConfigurazioneFile.ConfiguratoreRistorante;
 
 public class Main {
@@ -20,7 +19,6 @@ public class Main {
 			ristorante = accediRistorante(appDirectoryPath);
 		}
 		Utente.mostraMenuRuoli(appDirectoryPath+ristorante.getNome()+".txt");
-
 	}
 
 	private static Ristorante creaRistorante() {
@@ -28,8 +26,9 @@ public class Main {
 		String nomeRistorante = InputDati.leggiStringaNonVuota(messaggioBenvenuto);
 		String percorsoCompleto = appDirectoryPath+nomeRistorante + ".txt";
 		Ristorante ristorante = Ristorante.getInstance(nomeRistorante);
+		ConfiguratoreRistorante conf = new ConfiguratoreRistorante();
+		conf.salvaIstanzaOggetto(ristorante, percorsoCompleto);
 		Gestore.inizializzaRistorante(percorsoCompleto);
-		ConfiguratoreManager conf = new ConfiguratoreRistorante();
 		conf.salvaIstanzaOggetto(ristorante, percorsoCompleto);
 		return ristorante;
 	}
@@ -39,8 +38,8 @@ public class Main {
 		String nomeRistorante = ServizioFile.trovaPrimoFileTxt(appDirectoryPath);
 		if (nomeRistorante != null) {
 			String percorsoCompleto = appDirectoryPath+ nomeRistorante + ".txt";
-			ConfiguratoreManager configurazioneManager = new ConfiguratoreRistorante();
-			configurazioneManager.caricaIstanzaOggettoDaFile(percorsoCompleto);
+			ConfiguratoreRistorante configuratoreRistorante = new ConfiguratoreRistorante();
+			configuratoreRistorante.caricaIstanzaOggettoDaFile(percorsoCompleto);
 			ristoranteTrovato = Ristorante.getInstance(nomeRistorante);
 			System.out.println("Benvenuto! Ristorante: " + ristoranteTrovato.getNome());
 		} 

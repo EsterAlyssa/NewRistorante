@@ -570,7 +570,7 @@ public class Gestore extends Utente{
 		String msgErrMenu= "ATTENZIONE! Il menu inserito non esiste";
 
 		ConfiguratoreMenuTematico confMenuT = new ConfiguratoreMenuTematico();
-		
+
 		String pathDirectory = pathCompletoFileRistorante.substring(0, pathCompletoFileRistorante.lastIndexOf("/"));
 		String nomeDirectory = "Menu Tematici";
 		String pathMenuTematici = pathDirectory + "/" + nomeDirectory;
@@ -580,7 +580,7 @@ public class Gestore extends Utente{
 			MenuTematico menu = (MenuTematico) confMenuT.caricaIstanzaOggettoDaFile(file.getAbsolutePath());
 			ristorante.aggiungiMenuTematico(menu);
 		}
-		
+
 		visualizzaNomiMenuTematici(ristorante);
 
 		boolean trovato = true;

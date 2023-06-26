@@ -1,7 +1,6 @@
 package Utenti;
 
-import Ristorante.Ristorante;
 
 public interface MenuUtente {
-	void menu(Ristorante ristorante, String pathCompletoFile);
+	void menu(String pathCompletoFile);
 }
