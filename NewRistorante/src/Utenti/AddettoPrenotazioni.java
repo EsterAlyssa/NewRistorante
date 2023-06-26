@@ -69,7 +69,7 @@ public class AddettoPrenotazioni extends Utente {
 
 		List<File> elencoDirGiornate = ServizioFile.getElencoDirectory(pathCalendario);
 
-		TreeSet<Giornata> calendarioNoParam = new TreeSet<Giornata>();
+		TreeSet<Giornata> calendarioNoParam = new TreeSet<>();
 		for (File file : elencoDirGiornate) {
 			Giornata giornata = new Giornata(file.getName());
 			calendarioNoParam.add(giornata);

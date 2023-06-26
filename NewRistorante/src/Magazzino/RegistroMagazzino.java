@@ -68,7 +68,7 @@ public class RegistroMagazzino {
 			PriorityQueue<ElementoMagazzino> codaMerce = registro.get(nomeMerce);
 			//devo aggiornare la quantita'� prelevando gli elementi a partire da quello che scade prima
 
-			//se la coda non e' vuota e la quantita'� del primo elemento e' minore della quantita'  data (= non ci sono 
+			//se la coda non e' vuota e la quantita' del primo elemento e' minore della quantita'  data (= non ci sono 
 			//abbastanza merci di quella scadenza) allora continuo a prelevare elementi e a rimuoverli
 			//dalla coda
 			while (!codaMerce.isEmpty() && codaMerce.peek().getQuantita() <= quantita){
